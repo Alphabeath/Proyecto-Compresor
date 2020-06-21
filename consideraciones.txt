@@ -1,0 +1,43 @@
+consideraciones
+
+1. El primer par en cambiar es el de mayor frecuencia
+2. Los pares siguientes se van formando igualmente en funcion de la mayor frecuencia
+3. El tamano de σ es 27 y es fijo
+
+
+
+Version Directa
+
+    - pasos:
+        a. llenar el map
+        b. revisar el par que mas se repite
+        c. cambiar el par que mas se repite por otro entero
+        d. vaciar el map
+        e. volver al paso
+
+
+Version Avanzada
+
+    -detalles:
+        * Los nodos deben tener un puntero a la ocurrencia anterior y a la ocurrencia siguiente del par
+        *  El map, ademas de la frecuencia del par, almacenara un puntero a la primera ocurrencia del par 
+            y un puntero a la ultima ocurrencia del par.
+        *  Se implementara un MAX-heap cuya clave sera la frecuencia y, por cada nodo, el valor
+            sera el par correspondiente (notar que estos nodos son conceptuales, ya que MAX-heap se puede 
+            implementar sobre un arreglo o vector).
+        * El heap debe permiter una operacion adicional que dado nodo modifique su clave
+        * Cabe destacar que una clave puede llegar a valer 0 y no es necesario borrar dicho nodo
+        
+        (1) Si la frecuencia es menor a 2, se termina el algoritmo
+        (2) Mientras la frecuencia es mayor o igual a 2
+    -pasos:
+        a. En primera pasa se inicializa el map, el heap y los punteros de la lista doblemente enlazada
+        b. Iterativamente se solicita al heap el par de mayor frecuencia
+        c. Primer caso (1), caso contrario (2) se creara un nuevo simbolo que reemplazara a dicho par
+        d. Por cada sustitucion en la secuencia se puede:
+            1- Crear un nuevo par (con el nuevo simbolo) y con el que precede y sucede
+            2- Modificar la frecuencia de un par y/o eliminar un par (se deben mantener los punteros en la lista doblemente enlazada)
+            
+
+            
+
