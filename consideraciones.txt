@@ -9,7 +9,8 @@ consideraciones
 Version Directa
 
     - pasos:
-        a. llenar el map
+        a. llenar el map con los pares generados a partir de la doublelinkedlist de 
+           izquierda a derecha
         b. revisar el par que mas se repite
         c. cambiar el par que mas se repite por otro entero
         d. vaciar el map
