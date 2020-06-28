@@ -38,6 +38,11 @@ Version Avanzada
         d. Por cada sustitucion en la secuencia se puede:
             1- Crear un nuevo par (con el nuevo simbolo) y con el que precede y sucede
             2- Modificar la frecuencia de un par y/o eliminar un par (se deben mantener los punteros en la lista doblemente enlazada)
+
+    Respuestas:
+    1.- No es necesario, pero si quieres hacerla adelante, puede que te quede mas organizado y te sea más fácil //No necesario
+    2.- No //compresor
+    3.- el par de numeros
             
 
             
