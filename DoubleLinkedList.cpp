@@ -28,8 +28,11 @@ void DoubleLinkedList::insertFirst(int i){
         tail = new nodo();
 		head->siguiente = a;
         tail->anterior = a;
+        a->siguiente = tail;
+        a->anterior = head;
 	}else{
 		a->siguiente = head->siguiente;
+        a->siguiente->anterior = a;
         a->anterior = head;
 		head->siguiente = a;
 	}
@@ -43,9 +46,12 @@ void DoubleLinkedList::insertLast(int i){
         tail = new nodo();
 		head->siguiente = a;
         tail->anterior = a;
+        a->siguiente = tail;
+        a->anterior = head;
 	}else{
 		a->siguiente = tail;
         a->anterior = tail->anterior;
+        a->anterior->siguiente = a;
 		tail->anterior = a;
 	}
 	++mysize;
