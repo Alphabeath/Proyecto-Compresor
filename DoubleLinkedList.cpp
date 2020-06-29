@@ -21,6 +21,7 @@ DoubleLinkedList::~DoubleLinkedList(){
     delete tail;
 	delete head;
 }
+
 void DoubleLinkedList::insertFirst(int i){
     nodo *a = new nodo();
 	a->n = i;
@@ -39,6 +40,7 @@ void DoubleLinkedList::insertFirst(int i){
 	}
 	++mysize;
 }
+
 void DoubleLinkedList::insertLast(int i){
     nodo *a = new nodo();
 	a->n = i;
@@ -57,6 +59,7 @@ void DoubleLinkedList::insertLast(int i){
 	}
 	++mysize;
 }
+
 void DoubleLinkedList::removeFirst(){
     if(mysize > 0){
 		nodo * aux = head->siguiente;
@@ -66,6 +69,7 @@ void DoubleLinkedList::removeFirst(){
 		--mysize;
 	}
 }
+
 void DoubleLinkedList::removeLast(){
     if(mysize > 0){
 		nodo * aux = tail->anterior;
@@ -122,14 +126,27 @@ void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
         nodo * aux1 = head->siguiente;
         nodo * aux2 = aux1->siguiente;
         for(int i = 0; i < mysize - 1; i++){
-            mapa[{aux1->n,aux2->n}];
+            mapa[{aux1->n,aux2->n}]; //mapa inicializa el valor de la clave en 0
             aux1 = aux2;
             aux2 = aux2->siguiente;
         }
     }else{
         cout<<"No hay suficientes nodos (minimo 2 pares)"<<endl;
     }
-    
+}
+
+void DoubleLinkedList::revisaPares(map<pair<int,int>,int> & mapa){
+    if(mysize > 3){
+        nodo * aux1 = head->siguiente;
+        nodo * aux2 = aux1->siguiente;
+        for(int i = 0;i < mysize - 1;i++){
+            ++mapa[{aux1->n,aux2->n}];
+            aux1 = aux2;
+            aux2 = aux2->siguiente;
+        }
+    }else{
+        cout<<"No hay suficientes nodos (minimo 2 pares)"<<endl;
+    }
 }
 
 int DoubleLinkedList::first(){
