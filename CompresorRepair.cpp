@@ -1,5 +1,5 @@
 #include "CompresorRepair.h"
-/*
+
 CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
     d = lista;
 }
@@ -7,7 +7,7 @@ CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
 CompresorRepair::~CompresorRepair(){
     delete d;
 }
-*/
+
 void CompresorRepair::versionDirecta(){
     /*
     cout<<"size de mapa : "<<mapa.size()<<endl;

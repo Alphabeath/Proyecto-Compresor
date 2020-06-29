@@ -116,7 +116,7 @@ void DoubleLinkedList::imprime(){
     cout<<endl;
 }
 
-/*
+
 void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
     if(mysize > 3){
         nodo * aux1 = head->siguiente;
@@ -131,7 +131,7 @@ void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
     }
     
 }
-*/
+
 int DoubleLinkedList::first(){
     if(mysize > 0){
         return head->siguiente->n;
