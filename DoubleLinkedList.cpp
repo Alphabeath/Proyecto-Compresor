@@ -5,6 +5,7 @@ DoubleLinkedList::DoubleLinkedList(){
 	head = NULL;
     tail = NULL;
 }
+
 DoubleLinkedList::~DoubleLinkedList(){
     nodo *aux1 = head->siguiente;
     nodo *aux2 = NULL;
@@ -74,6 +75,63 @@ void DoubleLinkedList::removeLast(){
 		--mysize;
 	}
 }
+/*
+    Recibe el par a reemplazar, y el entero sigma+1 que sera nuevo nodo
+    De esta manera borra todas las apariciones del par en la Double Linked List dejando el nuevo nodo
+    que contiene el entero antes mencionado en su lugar
+*/
+void DoubleLinkedList::removeAtPair(pair<int,int> par, int reemplazo){
+    //El tamanio debe ser minimo 4, es decir existen al menos 2 pares a reemplazar
+    if(mysize > 3){
+        nodo * aux1 = head->siguiente;
+        nodo * aux2 = head->siguiente->siguiente;
+        nodo * nodo_r = NULL;
+        for(int i = 0; i< mysize - 1;++i){
+            if((aux1->n == par.first)&&(aux2->n == par.second)){
+                nodo_r = new nodo();          
+                nodo_r->n = reemplazo;
+                nodo_r->anterior = aux1->anterior;
+                nodo_r->siguiente = aux2->siguiente; 
+                aux1->anterior->siguiente = nodo_r;
+                aux2->siguiente->anterior = nodo_r;
+                delete aux1;
+                delete aux2;
+                --mysize;
+                aux1 = nodo_r->siguiente;
+                aux2 = nodo_r->siguiente->siguiente;
+            }else{
+                aux1 = aux2;
+                aux2 = aux2->siguiente;
+            }
+        } 
+    }
+}
+
+void DoubleLinkedList::imprime(){
+    nodo * aux = head;
+    for(int i = 0; i< mysize; ++i){
+        cout<<aux->siguiente->n<<" ";
+        aux = aux->siguiente;
+    }
+    cout<<endl;
+}
+
+/*
+void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
+    if(mysize > 3){
+        nodo * aux1 = head->siguiente;
+        nodo * aux2 = aux1->siguiente;
+        for(int i = 0; i < mysize - 1; i++){
+            mapa[{aux1->n,aux2->n}];
+            aux1 = aux2;
+            aux2 = aux2->siguiente;
+        }
+    }else{
+        cout<<"No hay suficientes nodos (minimo 2 pares)"<<endl;
+    }
+    
+}
+*/
 int DoubleLinkedList::first(){
     if(mysize > 0){
         return head->siguiente->n;
@@ -86,8 +144,7 @@ int DoubleLinkedList::last(){
         return tail->anterior->n;
     }else{
         return -1;
-    }
-        
+    }   
 }
 int DoubleLinkedList::size(){
     return mysize;
@@ -97,4 +154,4 @@ bool DoubleLinkedList::isEmpty(){
         return false;
     else
         return true;
-};
+}

@@ -44,6 +44,15 @@ Version Avanzada
     2.- No //compresor
     3.- el par de numeros
             
+Holaa!! Contestando a tus preguntas...
+
+1-Si, puedes crear una clase, o bien simplemente almacenas dos nodos
+ (head y tail, si es que necesitas) en la clase Repair, ya que el profe no solicitó
+  completo encapsulamiento para este caso específico de la list
+2-No, no se pide descomprimir. Sólo se pide que se imprima la lista comprimida
+3-Las claves para los maps deben ser únicas; por lo que no te serviría usar un entero,
+ puesto que ellos representan numeros en la lista, los cuales pueden encontrarse en más de
+  un par diferente, entonces no te serviría como identificador. Lo mejor es usar el par formado
 
             
 

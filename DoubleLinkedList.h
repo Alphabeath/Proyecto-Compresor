@@ -20,6 +20,9 @@ class DoubleLinkedList{
         void insertLast(int i);
         void removeFirst();
         void removeLast();
+        void removeAtPair(pair<int,int> par, int reemplazo);
+        //void llenaMap(map<pair<int,int>,int> &mapa);
+        void imprime();
         int first();
         int last();
         int size();

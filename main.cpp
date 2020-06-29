@@ -2,22 +2,27 @@
 #include <vector>
 #include <string>
 #include "DoubleLinkedList.h"
-#define sigma = 40;
+#include "CompresorRepair.h"
+//#define sigma = 40;
 using namespace std;
 
 int main()
 {
+   /*
    DoubleLinkedList *d = new DoubleLinkedList();
-   d->insertFirst(1);
-   cout<<"first: "<<d->first()<<endl;
-   d->insertFirst(2);
-   cout<<"Last: "<<d->last()<<endl;
-   d->insertFirst(3);
-   cout<<"first: "<<d->first()<<endl;
-   d->removeFirst();
-   cout<<"first: "<<d->first()<<endl;
-   cout<<"Last: "<<d->last()<<endl; 
-   d->removeLast();
-   cout<<"Last: "<<d->last()<<endl;
-   cout<<"size: "<<d->size()<<endl;
+   d->insertLast(1);
+   d->insertLast(2);
+   d->insertLast(9);
+   d->insertLast(1);
+   d->insertLast(2);
+   d->insertLast(9);
+   d->insertLast(8);
+   d->imprime();
+   pair<int,int>par(1,2);
+   d->removeAtPair(par, 5);
+   d->imprime();
+   CompresorRepair *c = new CompresorRepair(d);
+   c->versionDirecta();
+   */
+   return 0;
 }
