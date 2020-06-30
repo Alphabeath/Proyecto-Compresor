@@ -13,11 +13,32 @@ Version Directa
            izquierda a derecha
         b. revisar el par que mas se repite
         c. cambiar el par que mas se repite por otro entero
-        d. vaciar el map
+     a   d. vaciar el map
         e. volver al paso
 
 
 Version Avanzada
+    -ALE
+        *Con el heap verifica si el par exite en el map
+            - si no existe en el map crea el nodo del heap, lo inicializa y 
+            la primera y ultima ocurrencia es el mismo y luego lo añade al mapa
+        *El mapa es tipo map<pair<int,int>,struct algo>
+        *el algo es:
+                 algo{
+                    puntero primera ocurrencia del par
+                    puntero ultima ocurrencia del par 
+                    nodo del heap donde se almacenaba esa posicion
+                 }
+        *el nuevo heap debe tener: 
+            - frecuencia
+            - nodo al padre
+            - nodo al hijo izquierdo y nodo al hijo derecho
+            - par almacenado
+        1ro 
+            meter el par que esta en la lista doblemente enlazada al heap
+            meter el par al mapa donde la primera ultima ocurrencia del par es si mismo
+
+
 
     -detalles:
         * Los nodos deben tener un puntero a la ocurrencia anterior y a la ocurrencia siguiente del par
@@ -26,7 +47,7 @@ Version Avanzada
         *  Se implementara un MAX-heap cuya clave sera la frecuencia y, por cada nodo, el valor
             sera el par correspondiente (notar que estos nodos son conceptuales, ya que MAX-heap se puede 
             implementar sobre un arreglo o vector).
-        * El heap debe permiter una operacion adicional que dado nodo modifique su clave
+        * El heap debe permitIr una operacion adicional que dado nodo modifique su clave
         * Cabe destacar que una clave puede llegar a valer 0 y no es necesario borrar dicho nodo
         
         (1) Si la frecuencia es menor a 2, se termina el algoritmo
@@ -41,7 +62,7 @@ Version Avanzada
 
     Respuestas:
     1.- No es necesario, pero si quieres hacerla adelante, puede que te quede mas organizado y te sea más fácil //No necesario
-    2.- No //compresor
+    2.- No compresor
     3.- el par de numeros
             
 Holaa!! Contestando a tus preguntas...

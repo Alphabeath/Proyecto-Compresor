@@ -60,25 +60,6 @@ void DoubleLinkedList::insertLast(int i){
 	++mysize;
 }
 
-void DoubleLinkedList::removeFirst(){
-    if(mysize > 0){
-		nodo * aux = head->siguiente;
-		head->siguiente = aux->siguiente;
-        aux->siguiente->anterior = head;
-        delete aux;
-		--mysize;
-	}
-}
-
-void DoubleLinkedList::removeLast(){
-    if(mysize > 0){
-		nodo * aux = tail->anterior;
-		tail->anterior = aux->anterior;
-        aux->anterior->siguiente = tail;
-        delete aux;
-		--mysize;
-	}
-}
 /*
     Recibe el par a reemplazar, y el entero sigma+1 que sera nuevo nodo
     De esta manera borra todas las apariciones del par en la Double Linked List dejando el nuevo nodo
@@ -182,20 +163,6 @@ void DoubleLinkedList::revisaPares(map<pair<int,int>,int> & mapa){
     }
 }
 
-int DoubleLinkedList::first(){
-    if(mysize > 0){
-        return head->siguiente->n;
-    }else{
-        return -1;
-    }
-}
-int DoubleLinkedList::last(){
-    if(mysize > 0){
-        return tail->anterior->n;
-    }else{
-        return -1;
-    }   
-}
 int DoubleLinkedList::size(){
     return mysize;
 }
