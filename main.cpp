@@ -15,11 +15,9 @@ int main()
    d->insertLast(2);
    d->insertLast(9);
    d->insertLast(8);
-   /*d->imprime();
-   pair<int,int>par(1,2);
-   d->removeAtPair(par, 5);
+
    d->imprime();
-   */
+   
    CompresorRepair *c = new CompresorRepair(d);
    c->versionDirecta();
 

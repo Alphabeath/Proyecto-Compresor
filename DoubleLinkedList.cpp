@@ -120,6 +120,36 @@ void DoubleLinkedList::imprime(){
     cout<<endl;
 }
 
+pair<pair<int,int>,int> DoubleLinkedList::buscaMayor(map<pair<int,int>,int> & mapa){
+    if(mapa.size() > 1){
+        map<pair<int,int>,int>::iterator it=mapa.begin();
+        pair<pair<int,int>,int> par;
+        par.first = it->first;
+        par.second = it->second;
+        for (it ; it!=mapa.end(); ++it){
+            if(it->second > par.second){
+                par.first = it->first;
+                par.second = it->second;
+            }
+        }
+        return par;
+    }else{
+        //nunca caera a este else pero esta seria una forma de hacerlo mas general
+        map<pair<int,int>,int>::iterator it=mapa.begin();
+        if(mapa.size() == 1){
+            pair<pair<int,int>,int> par;
+            par.first = it->first;
+            par.second = it->second;
+            return par;
+        }
+        pair<pair<int,int>,int> vacio;
+        vacio.first.first = 0;
+        vacio.first.second = 0;
+        vacio.second = 0;
+        cout<<"No hay pares para comparar"<<endl;
+        return vacio;
+    }
+}
 
 void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
     if(mysize > 3){
@@ -134,7 +164,10 @@ void DoubleLinkedList::llenaMap(map<pair<int,int>,int> & mapa){
         cout<<"No hay suficientes nodos (minimo 2 pares)"<<endl;
     }
 }
-
+/*
+Metodo que aumenta la frecuencia de las apariciones de un par en la lista,
+con estos previamente guardados en un mapa
+*/
 void DoubleLinkedList::revisaPares(map<pair<int,int>,int> & mapa){
     if(mysize > 3){
         nodo * aux1 = head->siguiente;

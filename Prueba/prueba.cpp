@@ -10,6 +10,7 @@ struct nodo{
     char c;
 };
 
+
 int main (){
     int sigma = 27;
     map <pair<int, int>, int> map_p;
@@ -33,6 +34,8 @@ int main (){
 
     for (map<pair<int,int>,int>::iterator it=map_p.begin(); it!=map_p.end(); ++it)
         cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " Su valor :"<< it ->second<<endl;
+
+    
     /*
     map<int,nodo> m;
     nodo a,b,c;
