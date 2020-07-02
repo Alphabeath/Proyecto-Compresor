@@ -11,21 +11,21 @@ void MaxHeap::imprime(){
     }
     cout<<endl;
 }
-int MaxHeap::upHeap(int size){
-    int i = vec_nh.size();
-    while(i > 1){
-        int padre = (i - 1)/2;
-        if(padre == 0) return i - 1;
-        if(vec_nh[padre].frecuencia < vec_nh[i - 1].frecuencia){
+int MaxHeap::upHeap(int pos){
+    int i = pos;
+    int padre = i/2;
+    while(padre > 0){
+        if(vec_nh[padre].frecuencia < vec_nh[i].frecuencia){
             nodoHeap aux = vec_nh[padre];
-            vec_nh[padre] = vec_nh[i - 1];
-            vec_nh[i - 1] = aux;
+            vec_nh[padre] = vec_nh[i];
+            vec_nh[i] = aux;
             i = padre; 
         }else{
-            return i - 1;
+            return i;
         }
+        padre = i/2;
     }
-    return -1;
+    return i;
 }
 
 void MaxHeap::downHeap(int pos){
@@ -38,8 +38,8 @@ MaxHeap::~MaxHeap(){
 
 void MaxHeap::insert(nodoHeap nh){
     vec_nh.push_back(nh);
-    if(vec_nh.size() != 1){
-        upHeap(vec_nh.size());
+    if(vec_nh.size() != 2){
+        upHeap(vec_nh.size() - 1);
     }
 }
 
@@ -59,7 +59,7 @@ bool MaxHeap::isEmpty(){
 }
 
 pair<int,int> MaxHeap::max(){
-    return vec_nh.back().par;
+    return vec_nh.at(1).par;
 }
 
 void MaxHeap::modificaClave(nodoHeap * n, int clave_nueva ){

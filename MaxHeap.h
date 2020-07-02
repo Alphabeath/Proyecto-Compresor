@@ -11,7 +11,7 @@ class MaxHeap{
     private:
         int mysize;
         vector<nodoHeap> vec_nh;
-        int upHeap(int size);
+        int upHeap(int pos);
         void downHeap(int pos);
     public:
         MaxHeap();

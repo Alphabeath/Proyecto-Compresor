@@ -31,8 +31,6 @@ Version Avanzada
                  }
         *el nuevo heap debe tener: 
             - frecuencia
-            - nodo al padre
-            - nodo al hijo izquierdo y nodo al hijo derecho
             - par almacenado
         1ro 
             meter el par que esta en la lista doblemente enlazada al heap
