@@ -4,6 +4,7 @@
 #include <string.h>
 
 using namespace std;
+
 struct nodo{
     int n;
     string a;
@@ -14,7 +15,33 @@ struct nodo{
 int main (){
     int sigma = 27;
     map <pair<int, int>, int> map_p;
-    vector<int> vec_p;
+    vector<int> vec_int;
+    vec_int.push_back(9);
+    vec_int.push_back(2);
+    for(int i = 0; i<vec_int.size();++i)
+        cout<<vec_int.at(i)<<" ";
+    cout<<endl;
+    vec_int.swap(0,1);
+    for(int i = 0; i<vec_int.size();++i)
+        cout<<vec_int.at(i)<<" ";
+    /*
+    nodo *arr = new nodo[5];
+    array<nodo,5> hola;
+    nodo chao;
+    hola[0]= chao;
+    int arra[4];
+    cout<<hola.size();
+*/
+  // "it" no longer valid, get a new one:
+  /*it = myvector.begin();
+
+  std::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());
+
+  int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);
+*/
+/*
     vec_p.push_back(1);
     vec_p.push_back(4);
     vec_p.push_back(2);

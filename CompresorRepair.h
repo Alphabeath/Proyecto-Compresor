@@ -7,13 +7,14 @@ using namespace std;
 struct pairOfMap{
     nodo * primera_ocurrencia;
     nodo * ultima_ocurrencia;
-    nodoHeap *  nodo_heap_actual;
+    int nodoHeap;
 };
 
 class CompresorRepair{
     private:
         int sigma;
         DoubleLinkedList * d;
+        MaxHeap mh;
         map<pair<int,int>,int> mapa;
         map<pair<int,int>,pairOfMap> mapaAvanzado;
 

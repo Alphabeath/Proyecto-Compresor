@@ -1,7 +1,5 @@
 #include "CompresorRepair.h"
 
-
-
 CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
     sigma = 27;
     d = lista;
@@ -37,6 +35,28 @@ void CompresorRepair::versionDirecta(){
 }
 
 void CompresorRepair::versionAvanzada(){
-    
+    nodoHeap uno;
+    uno.frecuencia = 2;
+    nodoHeap dos;
+    dos.frecuencia = 1;
+    nodoHeap tres;
+    tres.frecuencia = 1;
+    nodoHeap cuatro;
+    cuatro.frecuencia = 2;
+    nodoHeap cinco;
+    cinco.frecuencia = 3;
+    nodoHeap seis;
+    seis.frecuencia = 1;
+    nodoHeap siete;
+    siete.frecuencia = 4;
+    mh.insert(uno);
+    mh.insert(dos);
+    mh.insert(tres);
+    mh.insert(cuatro);
+    mh.insert(cinco);
+    mh.insert(seis);
+    mh.insert(siete);
+    mh.imprime();
+
 }
 

@@ -19,7 +19,7 @@ Version Directa
 
 Version Avanzada
     -ALE
-        *Con el heap verifica si el par exite en el map
+        *El map verifica si el par exite en el 
             - si no existe en el map crea el nodo del heap, lo inicializa y 
             la primera y ultima ocurrencia es el mismo y luego lo añade al mapa
         *El mapa es tipo map<pair<int,int>,struct algo>

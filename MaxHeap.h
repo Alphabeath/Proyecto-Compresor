@@ -4,23 +4,23 @@ using namespace std;
 
 struct nodoHeap{
     int frecuencia;
-    nodoHeap * padre;
-    nodoHeap * hijoIzquierdo;
-    nodoHeap * hijoDerecho;
     pair<int,int> par;
 };
 
 class MaxHeap{
     private:
         int mysize;
-        int * arr;
+        vector<nodoHeap> vec_nh;
+        int upHeap(int size);
+        void downHeap(int pos);
     public:
-        MaxHeap(int tam);
+        MaxHeap();
         ~MaxHeap();
-        void insert();
+        void insert(nodoHeap nh);
         void removeMax();
         int size();
         bool isEmpty();
         pair<int,int> max();
         void modificaClave(nodoHeap * n, int clave_nueva);
+        void imprime();
 };
