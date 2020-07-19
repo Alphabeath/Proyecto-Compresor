@@ -17,7 +17,7 @@ class MaxHeap{
         MaxHeap();
         ~MaxHeap();
         void insert(nodoHeap nh);
-        void removeMax();
+        pair<int.int> removeMax();
         int size();
         bool isEmpty();
         pair<int,int> max();

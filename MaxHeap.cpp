@@ -43,16 +43,19 @@ void MaxHeap::insert(nodoHeap nh){
     }
 }
 
-void MaxHeap::removeMax(){
+pair<int,int> MaxHeap::removeMax(){
+    pair<int,int> par_a_quitar = vec_nh[1].par;
+    vec_nh.at(1).frecuencia = -1;
 
+    return par_a_quitar;
 }
 
 int MaxHeap::size(){
-    return mysize;
+    return vec_nh.size() - 1;
 }
 
 bool MaxHeap::isEmpty(){
-    if(mysize > 0)
+    if(vec_nh.size() - 1 > 0)
         return false;
     else
         return true;
