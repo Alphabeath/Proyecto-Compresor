@@ -35,6 +35,11 @@ Version Avanzada
         1ro 
             meter el par que esta en la lista doblemente enlazada al heap
             meter el par al mapa donde la primera ultima ocurrencia del par es si mismo
+        
+        Otros:
+            EL heap no se vacia, solo cambiamos a 0 los pares que dejan de existir,
+            podemos borrarlo a posteriori
+
 
 
 
