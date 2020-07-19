@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-   DoubleLinkedList *d = new DoubleLinkedList();
+   DoubleListAdvanced *d = new DoubleListAdvanced();
    d->insertLast(1);
    d->insertLast(2);
    d->insertLast(9);
@@ -16,7 +16,7 @@ int main()
    d->insertLast(9);
    d->insertLast(8);
 
-   //d->imprime();
+   d->imprime();
    
    CompresorRepair *c = new CompresorRepair(d);
    //c->versionDirecta();

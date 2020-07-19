@@ -5,6 +5,11 @@ CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
     d = lista;
 }
 
+CompresorRepair::CompresorRepair(DoubleListAdvanced * lista){
+    sigma = 27;
+    Ad = lista;
+}
+
 CompresorRepair::~CompresorRepair(){
     delete d;
 }
@@ -56,6 +61,8 @@ void CompresorRepair::versionAvanzada(){
     mh.insert(cinco);
     mh.insert(seis);
     mh.insert(siete);
+    mh.imprime();
+    pair<int,int> prueba = mh.removeMax();
     mh.imprime();
 
 }

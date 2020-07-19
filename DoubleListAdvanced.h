@@ -2,20 +2,22 @@
 
 using namespace std;
 
-struct nodo{
-    nodo * siguiente;
-    nodo * anterior;
+struct nodoAd{
+    nodoAd * siguiente;
+    nodoAd * anterior;
+    nodoAd * ocurrencia_siguiente;
+    nodoAd * ocurrencia_anterior; 
     int n; 
 };
 
-class DoubleLinkedList{
+class DoubleListAdvanced{
     private:
-        struct nodo * head;
-        struct nodo * tail;
+        struct nodoAd * head;
+        struct nodoAd * tail;
         int mysize;
     public:
-        DoubleLinkedList();
-        ~DoubleLinkedList();
+        DoubleListAdvanced();
+        ~DoubleListAdvanced();
         void insertFirst(int i);
         void insertLast(int i);
         void removeAtPair(pair<int,int> par, int reemplazo);
