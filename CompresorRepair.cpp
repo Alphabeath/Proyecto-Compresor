@@ -8,6 +8,7 @@ CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
 CompresorRepair::CompresorRepair(DoubleListAdvanced * lista){
     sigma = 27;
     Ad = lista;
+    mh = MaxHeap(mapaAvanzado);
 }
 
 CompresorRepair::~CompresorRepair(){
@@ -63,6 +64,7 @@ void CompresorRepair::versionAvanzada(){
     mh.insert(siete);
     mh.imprime();
     pair<int,int> prueba = mh.removeMax();
+    cout<<prueba.first<<" "<< prueba.second<<endl;
     mh.imprime();
 
 }

@@ -5,11 +5,6 @@
 
 using namespace std;
 
-struct pairOfMap{
-    nodo * primera_ocurrencia;
-    nodo * ultima_ocurrencia;
-    int nodoHeap;
-};
 
 class CompresorRepair{
     private:
