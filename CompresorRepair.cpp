@@ -8,10 +8,11 @@ CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
 CompresorRepair::CompresorRepair(DoubleListAdvanced * lista){
     sigma = 27;
     Ad = lista;
-    mh = MaxHeap(mapaAvanzado);
+
 }
 
 CompresorRepair::~CompresorRepair(){
+    delete Ad;
     delete d;
 }
 

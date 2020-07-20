@@ -5,6 +5,11 @@
 
 using namespace std;
 
+struct pairOfMap{
+    nodoAd * primera_ocurrencia;
+    nodoAd * ultima_ocurrencia;
+    int posHeap;
+};
 
 class CompresorRepair{
     private:

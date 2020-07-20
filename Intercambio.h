@@ -5,3 +5,4 @@ struct pairOfMap{
     nodoAd * ultima_ocurrencia;
     int posHeap;
 };
+
