@@ -8,6 +8,7 @@ using namespace std;
 struct pairOfMap{
     nodoAd * primera_ocurrencia;
     nodoAd * ultima_ocurrencia;
+    nodoHeap * nodoDelHeap;
     int posHeap;
 };
 
@@ -19,7 +20,6 @@ class CompresorRepair{
         MaxHeap mh;
         map<pair<int,int>,int> mapa;
         map<pair<int,int>,pairOfMap> mapaAvanzado;
-
     public:
         CompresorRepair(DoubleLinkedList *lista);
         CompresorRepair(DoubleListAdvanced *lista);

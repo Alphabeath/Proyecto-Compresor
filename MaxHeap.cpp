@@ -1,31 +1,38 @@
 #include "MaxHeap.h"
 
 MaxHeap::MaxHeap(){
-    nodoHeap cero;
-    cero.frecuencia = 0;
+    nodoHeap * cero = new nodoHeap();
+    cero->frecuencia = 0;
+	cero->posicion = 0;
     vec_nh.push_back(cero);
+}
+
+MaxHeap::~MaxHeap(){
+	for(int i = 0; i<vec_nh.size(); ++i)
+		delete vec_nh.at(i);
 }
 
 void MaxHeap::imprime(){
     for(int i = 0; i< vec_nh.size(); ++i){
-        cout<<vec_nh.at(i).frecuencia<<" ";
+        cout<<vec_nh.at(i)->frecuencia<<" ";
     }
     cout<<endl;
 }
 
 void MaxHeap::heapSwap(int a,int b){
-	nodoHeap aux = vec_nh[a];
+	nodoHeap * aux = vec_nh[a];
+	aux->posicion = b;
+	vec_nh[b]->posicion = a;
 	vec_nh[a] = vec_nh[b];
 	vec_nh[b] = aux;
-	//mapaPares.at(vec_nh[a].par).posHeap = b;
-	//mapaPares.at(vec_nh[b].par).posHeap = a;
+
 }
 
 void MaxHeap::upHeap(int pos){
     int i = pos;
     int padre = i/2;
     while(padre > 0){
-        if(vec_nh[padre].frecuencia < vec_nh[i].frecuencia){
+        if(vec_nh[padre]->frecuencia < vec_nh[i]->frecuencia){
             heapSwap(padre,i);
             i = padre; 
         }else{
@@ -44,7 +51,7 @@ void MaxHeap::downHeap(int pos){
 	while(bandera){
 		hijo_aux = -1;
 		if(hijo_r < vec_nh.size()){
-			if(vec_nh.at(hijo_r).frecuencia > vec_nh.at(hijo_l).frecuencia){
+			if(vec_nh.at(hijo_r)->frecuencia > vec_nh.at(hijo_l)->frecuencia){
 				hijo_aux = hijo_r;
 			}else{
 				if(hijo_l < vec_nh.size()){
@@ -57,7 +64,7 @@ void MaxHeap::downHeap(int pos){
 			}
 		}
 		if(hijo_aux != -1){
-			if(vec_nh.at(padre).frecuencia < vec_nh.at(hijo_aux).frecuencia){
+			if(vec_nh.at(padre)->frecuencia < vec_nh.at(hijo_aux)->frecuencia){
 				heapSwap(padre,hijo_aux);
 				padre = hijo_aux;
 				hijo_l = padre*2;
@@ -72,30 +79,29 @@ void MaxHeap::downHeap(int pos){
 	}
 }
 
-MaxHeap::~MaxHeap(){
-
-}
-
-void MaxHeap::insert(nodoHeap nh){
+void MaxHeap::insert(nodoHeap * nh){
     vec_nh.push_back(nh);
+	nh->posicion = vec_nh.size() - 1;
     if(vec_nh.size() > 2){
         upHeap(vec_nh.size() - 1);
     }
 }
 
 pair<int,int> MaxHeap::removeMax(){
-    pair<int,int> par_a_quitar = vec_nh.at(1).par;
+    pair<int,int> par_a_quitar = vec_nh.at(1)->par;
     if(vec_nh.size() > 3){
 		heapSwap(1,vec_nh.size() - 1);
-		vec_nh.at(vec_nh.size()-1).frecuencia=0;
+		vec_nh.at(vec_nh.size()-1)->frecuencia = -1;
 		downHeap(1);
 	}else{
 		if(vec_nh.size() == 3){
 			heapSwap(1,2);
-			vec_nh.at(2).frecuencia = 0;
+			vec_nh.at(2)->frecuencia = -1;
 		}else{
-			if(vec_nh.size() == 2)
-				vec_nh.at(1).frecuencia = 0;
+			if(vec_nh.size() == 2){
+				vec_nh.at(1)->frecuencia = -1;
+				vec_nh.at(1)->posicion = 1;
+			}
 		}
 	}
     return par_a_quitar;
@@ -113,15 +119,15 @@ bool MaxHeap::isEmpty(){
 }
 
 pair<int,int> MaxHeap::max(){
-    return vec_nh.at(1).par;
+    return vec_nh.at(1)->par;
 }
 
 void MaxHeap::modificaClave(int pos, bool aumenta){
     if(aumenta){
-		++vec_nh[pos].frecuencia; 
+		++vec_nh[pos]->frecuencia; 
        	upHeap(pos);
 	}else{
-		--vec_nh[pos].frecuencia;
+		--vec_nh[pos]->frecuencia;
 		downHeap(pos);
 	}
 }
