@@ -2,17 +2,38 @@
 #include <map>
 #include <bits/stdc++.h>
 #include <string.h>
+#include "Clase1.h"
 
 using namespace std;
 
+struct Singleton
+{
+  static int num; // Declaracion.
+
+  static void set(int n)
+  {
+    Singleton::num = n;
+  }
+
+  static int get()
+  {
+    return num;
+  }
+};
+
+int Singleton::num;
+/*
 struct nodo{
     int n;
     string a;
     char c;
 };
-
+*/
 
 int main (){
+    Clase1 c;
+    c.metodo1();
+    /*
     int sigma = 27;
     map <pair<int, int>, int> map_p;
     vector<int> vec_int;
@@ -21,10 +42,9 @@ int main (){
     for(int i = 0; i<vec_int.size();++i)
         cout<<vec_int.at(i)<<" ";
     cout<<endl;
-    vec_int.swap(0,1);
     for(int i = 0; i<vec_int.size();++i)
         cout<<vec_int.at(i)<<" ";
-    /*
+    
     nodo *arr = new nodo[5];
     array<nodo,5> hola;
     nodo chao;

@@ -10,7 +10,6 @@ struct nodoHeap{
 class MaxHeap{
     private:
         int mysize;
-        map<pair<int,int>,pairOfMap> mapaPares;
         vector<nodoHeap> vec_nh;
         void upHeap(int pos);
         void heapSwap(int a,int b);
@@ -18,7 +17,6 @@ class MaxHeap{
     public:
         MaxHeap();
         ~MaxHeap();
-        void setMap(map<pair<int,int>,pairOfMap> mapa);
         void insert(nodoHeap nh);
         pair<int,int> removeMax();
         int size();

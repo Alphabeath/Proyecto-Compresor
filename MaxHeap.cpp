@@ -1,15 +1,11 @@
 #include "MaxHeap.h"
 
 MaxHeap::MaxHeap(){
-	//mapaPares = mapa;
     nodoHeap cero;
     cero.frecuencia = 0;
     vec_nh.push_back(cero);
 }
 
-void MaxHeap::setMap(map<pair<int,int>,pairOfMap> mapa){
-	mapaPares = mapa;
-}
 void MaxHeap::imprime(){
     for(int i = 0; i< vec_nh.size(); ++i){
         cout<<vec_nh.at(i).frecuencia<<" ";

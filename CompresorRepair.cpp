@@ -8,7 +8,6 @@ CompresorRepair::CompresorRepair(DoubleLinkedList * lista){
 CompresorRepair::CompresorRepair(DoubleListAdvanced * lista){
     sigma = 27;
     Ad = lista;
-
 }
 
 CompresorRepair::~CompresorRepair(){
@@ -42,31 +41,86 @@ void CompresorRepair::versionDirecta(){
 }
 
 void CompresorRepair::versionAvanzada(){
+    if(Ad->size() > 2){
+        pair<int,int> auxI;
+        pairOfMap auxP;
+        nodoHeap auxH;
+        nodoAd * uno = Ad->getHead()->siguiente;
+        nodoAd * dos = Ad->getHead()->siguiente->siguiente;
+        for(int i = 0; i<Ad->size(); ++i){
+            auxI.first = uno->n;
+            auxI.second = dos->n;
+            map<pair<int,int>,pairOfMap>::iterator it;
+	        it = mapaAvanzado.find(auxI);
+	        if(it != mapaAvanzado.end()){
+                it->second.ultima_ocurrencia->ocurrencia_siguiente = uno;
+                uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                it->second.ultima_ocurrencia = uno;
+                mh.modificaClave(it->second.posHeap,true);
+
+            }else{
+                auxP.primera_ocurrencia = uno;
+                auxP.ultima_ocurrencia = uno;
+                mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(auxI,auxP));
+                auxH.frecuencia = 1;
+                auxH.par = auxI;
+                mh.insert(auxH);
+            }
+            uno = dos;
+            dos = dos->siguiente;
+        }
+        
+    }
+    
+    /*
     nodoHeap uno;
     uno.frecuencia = 2;
+    uno.par.first = 1;
+    uno.par.second = 2;
     nodoHeap dos;
     dos.frecuencia = 3;
+    dos.par.first = 2;
+    dos.par.second = 9;
     nodoHeap tres;
     tres.frecuencia = 1;
+    tres.par.first = 9;
+    tres.par.second = 1;
     nodoHeap cuatro;
     cuatro.frecuencia = 1;
+    cuatro.par.first = 1;
+    cuatro.par.second = 2;
     nodoHeap cinco;
     cinco.frecuencia = 4;
+    cinco.par.first = 9;
+    cinco.par.second = 8;
     nodoHeap seis;
     seis.frecuencia = 1;
-    nodoHeap siete;
-    siete.frecuencia = 1;
+    seis.par.first = 1;
+    seis.par.second = 5;
     mh.insert(uno);
     mh.insert(dos);
     mh.insert(tres);
     mh.insert(cuatro);
     mh.insert(cinco);
     mh.insert(seis);
-    mh.insert(siete);
     mh.imprime();
-    pair<int,int> prueba = mh.removeMax();
-    cout<<prueba.first<<" "<< prueba.second<<endl;
+    mh.modificaClave(1,false);
     mh.imprime();
-
+    mh.modificaClave(1,false);
+    mh.imprime();
+    mh.modificaClave(3,false);
+    mh.imprime();
+    mh.modificaClave(3,false);
+    mh.imprime();
+    cout<<endl;
+    mh.modificaClave(6,true);
+    mh.imprime();
+    mh.modificaClave(6,true);
+    mh.imprime();
+    mh.modificaClave(6,true);
+    mh.imprime();
+    mh.modificaClave(5,true);
+    mh.imprime();
+    */
 }
 

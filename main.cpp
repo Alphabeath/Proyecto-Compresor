@@ -16,7 +16,7 @@ int main()
    d->insertLast(9);
    d->insertLast(8);
 
-   d->imprime();
+   //d->imprime();
    
    CompresorRepair *c = new CompresorRepair(d);
    //c->versionDirecta();
