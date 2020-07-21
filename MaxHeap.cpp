@@ -16,6 +16,14 @@ void MaxHeap::imprime(){
     for(int i = 0; i< vec_nh.size(); ++i){
         cout<<vec_nh.at(i)->frecuencia<<" ";
     }
+	cout<<"pos->>     ";
+	for(int i = 0; i< vec_nh.size(); ++i){
+        cout<<vec_nh.at(i)->posicion<<" ";
+    }
+	cout<<"pares->>     ";
+	for(int i = 0; i< vec_nh.size(); ++i){
+        cout<<"("<<vec_nh.at(i)->par.first<<","<<vec_nh.at(i)->par.second<<")"<<" ";
+    }
     cout<<endl;
 }
 
