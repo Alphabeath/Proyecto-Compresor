@@ -17,7 +17,7 @@ CompresorRepair::~CompresorRepair(){
 
 void CompresorRepair::versionDirecta(){
     bool bandera = true;
-    int j = 0;
+    int j = 1;
     while(bandera){
         if(d->size() > 3){
             d->llenaMap(mapa);
@@ -53,12 +53,7 @@ void CompresorRepair::versionAvanzada(){
             auxI.second = dos->n;
             map<pair<int,int>,pairOfMap>::iterator it;
 	        it = mapaAvanzado.find(auxI);
-	        if(it != mapaAvanzado.end()){
-                it->second.ultima_ocurrencia->ocurrencia_siguiente = uno;
-                uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                it->second.ultima_ocurrencia = uno;
-                mh.modificaClave(it->second.nodoDelHeap->posicion,true);
-            }else{
+	        if(it == mapaAvanzado.end()){
                 auxP.primera_ocurrencia = uno;
                 auxP.ultima_ocurrencia = uno;
                 auxH = new nodoHeap();
@@ -67,15 +62,72 @@ void CompresorRepair::versionAvanzada(){
                 auxP.nodoDelHeap = auxH;
                 mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(auxI,auxP));
                 mh.insert(auxH);
+            }else{
+                it->second.ultima_ocurrencia->ocurrencia_siguiente = uno;
+                uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                it->second.ultima_ocurrencia = uno;
+                mh.modificaClave(it->second.nodoDelHeap->posicion,true);
             }
             uno = dos;
             dos = dos->siguiente;
         }
-
+        int j = 1;
         while(bandera){
             if(mh.max() >= 2){
                 pair<int,int> parAux = mh.removeMax();
-                
+                nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia;
+                nodoAd * nuevoAd = new nodoAd();
+                nuevoAd->anterior = auxAd->anterior;
+                nuevoAd->siguiente = auxAd->siguiente->siguiente;
+                nuevoAd->n = sigma + j;
+                auxAd->anterior->siguiente = nuevoAd;
+                auxAd->siguiente->siguiente->anterior = nuevoAd;
+                delete auxAd->siguiente;
+                delete auxAd;
+                map<pair<int,int>,pairOfMap>::iterator it;
+                if(nuevoAd->anterior!=NULL){
+                    pair<int,int> parAnt;
+                    parAnt.first = nuevoAd->anterior->n;
+                    parAnt.second = nuevoAd->n;
+                    it = mapaAvanzado.find(parAnt);
+	                if(it == mapaAvanzado.end()){
+                        nodoHeap * auxHeap = new nodoHeap();
+                        auxHeap->par = parAnt;
+                        auxHeap->frecuencia = 1;
+                        
+                        mh.insert(auxHeap);
+                    }else{
+                        mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                        
+                    }   
+                }
+                if(nuevoAd->siguiente != NULL){
+                    pair<int,int> parSig;
+                    parSig.first = nuevoAd->n;
+                    parSig.second = nuevoAd->siguiente->n;
+                    it = mapaAvanzado.find(parSig);
+	                if(it == mapaAvanzado.end()){
+                        auxP.primera_ocurrencia = nuevoAd;
+                        auxP.ultima_ocurrencia = nuevoAd;
+                        nodoHeap * auxHeap = new nodoHeap();
+                        auxHeap->par = parSig;
+                        auxHeap->frecuencia = 1;
+                        auxP.nodoDelHeap = auxHeap;
+                        mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
+                        mh.insert(auxHeap);
+                    }else{
+
+
+                        it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
+                        
+                        
+                        
+                        uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                        it->second.ultima_ocurrencia = uno;
+                        mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                    }
+                }
+                ++j;
             }else{
                 bandera = false;
             }
