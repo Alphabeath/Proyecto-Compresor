@@ -4,6 +4,7 @@ DoubleListAdvanced::DoubleListAdvanced(){
     mysize = 0;
 	head = NULL;
     tail = NULL;
+    ++j;
 }
 
 DoubleListAdvanced::~DoubleListAdvanced(){
@@ -55,12 +56,15 @@ void DoubleListAdvanced::insertLast(int i){
         tail->anterior = a;
         a->siguiente = tail;
         a->anterior = head;
+        a->i=j;
 	}else{
 		a->siguiente = tail;
         a->anterior = tail->anterior;
         a->anterior->siguiente = a;
 		tail->anterior = a;
+        a->i = j;
 	}
+    ++j;
 	++mysize;
 }
 
@@ -71,6 +75,22 @@ void DoubleListAdvanced::imprime(){
         cout<<aux->siguiente->n<<" ";
         aux = aux->siguiente;
     }
+    /*
+    cout<<endl<<endl;
+    aux = head;
+    for(int i = 0; i< mysize; ++i){
+        cout<<aux->siguiente->n<<" -->";
+        if(aux->siguiente->ocurrencia_anterior != NULL)
+             cout<<"anterior: "<<aux->siguiente->ocurrencia_anterior->i;
+        else
+            cout<<"anterior: "<<"null";
+        if(aux->siguiente->ocurrencia_siguiente != NULL)
+            cout<<" --- siguiente: "<<aux->siguiente->ocurrencia_siguiente->i<<endl;
+        else
+            cout<<" --- siguiente: "<<"null"<<endl;
+        aux = aux->siguiente;
+    }
+    */
     cout<<endl;
 }
 

@@ -22,7 +22,7 @@ class MaxHeap{
         pair<int,int> removeMax();
         int size();
         bool isEmpty();
-        pair<int,int> max();
+        int max();
         void modificaClave(int pos, bool aumenta);
         void imprime();
 };

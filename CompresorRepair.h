@@ -9,7 +9,6 @@ struct pairOfMap{
     nodoAd * primera_ocurrencia;
     nodoAd * ultima_ocurrencia;
     nodoHeap * nodoDelHeap;
-    int posHeap;
 };
 
 class CompresorRepair{
@@ -23,6 +22,7 @@ class CompresorRepair{
     public:
         CompresorRepair(DoubleLinkedList *lista);
         CompresorRepair(DoubleListAdvanced *lista);
+        void imprime();
         ~CompresorRepair();
         void versionDirecta();
         void versionAvanzada();

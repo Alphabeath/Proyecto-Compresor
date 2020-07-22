@@ -7,20 +7,27 @@ using namespace std;
 
 int main()
 {
-   DoubleListAdvanced *d = new DoubleListAdvanced();
-   d->insertLast(1);
-   d->insertLast(2);
-   d->insertLast(9);
-   d->insertLast(1);
-   d->insertLast(2);
-   d->insertLast(9);
-   d->insertLast(8);
+   DoubleListAdvanced * Ad = new DoubleListAdvanced();
+   Ad->insertLast(1);
+   Ad->insertLast(2);
+   Ad->insertLast(9);
+   Ad->insertLast(1);
+   Ad->insertLast(2);
+   Ad->insertLast(9);
+   Ad->insertLast(8);
+   Ad->insertLast(2);
+   Ad->insertLast(9);
 
-   //d->imprime();
-   
-   CompresorRepair *c = new CompresorRepair(d);
+   cout<<"---- Lista ----"<<endl;
+   Ad->imprime();
+   cout<<"----------"<<endl;
+   CompresorRepair *c = new CompresorRepair(Ad);
    //c->versionDirecta();
    c->versionAvanzada();
+   c->imprime();
+   //Ad->imprime();
+   
+
 
    return 0;
 }

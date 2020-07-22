@@ -8,13 +8,14 @@ struct nodoAd{
     nodoAd * ocurrencia_siguiente;
     nodoAd * ocurrencia_anterior; 
     int n; 
+    int i;
 };
 
 class DoubleListAdvanced{
     private:
         struct nodoAd * head;
         struct nodoAd * tail;
-        int mysize;
+        int mysize, j;
     public:
         DoubleListAdvanced();
         ~DoubleListAdvanced();

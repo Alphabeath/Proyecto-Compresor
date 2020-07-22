@@ -41,14 +41,14 @@ void CompresorRepair::versionDirecta(){
 }
 
 void CompresorRepair::versionAvanzada(){
-    /*
     if(Ad->size() > 2){
+        bool bandera = true;;
         pair<int,int> auxI;
         pairOfMap auxP;
-        nodoHeap * * auxH;
+        nodoHeap * auxH;
         nodoAd * uno = Ad->getHead()->siguiente;
         nodoAd * dos = Ad->getHead()->siguiente->siguiente;
-        for(int i = 0; i<Ad->size(); ++i){
+        for(int i = 0; i<Ad->size()-1; ++i){
             auxI.first = uno->n;
             auxI.second = dos->n;
             map<pair<int,int>,pairOfMap>::iterator it;
@@ -58,23 +58,47 @@ void CompresorRepair::versionAvanzada(){
                 uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
                 it->second.ultima_ocurrencia = uno;
                 mh.modificaClave(it->second.nodoDelHeap->posicion,true);
-
             }else{
                 auxP.primera_ocurrencia = uno;
                 auxP.ultima_ocurrencia = uno;
+                auxH = new nodoHeap();
                 auxH->frecuencia = 1;
                 auxH->par = auxI;
-                auxP.nodoDelHeap=auxH;
+                auxP.nodoDelHeap = auxH;
                 mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(auxI,auxP));
                 mh.insert(auxH);
             }
             uno = dos;
             dos = dos->siguiente;
         }
-        
+
+        while(bandera){
+            if(mh.max() >= 2){
+                pair<int,int> parAux = mh.removeMax();
+                
+            }else{
+                bandera = false;
+            }
+        }
+    }
+    
+}
+
+void CompresorRepair::imprime(){
+    //mh.imprime();
+    /*
+    cout<<"-- mapa --"<<endl;
+    map<pair<int,int>,pairOfMap>::iterator it;
+    it= mapaAvanzado.begin();
+    while(it!= mapaAvanzado.end()){
+        cout<<"("<< it->first.first <<","<< it->first.second<<") primera ocurrencia :" << it->second.primera_ocurrencia->i<<"  ultima ocurrencia :"<<it->second.ultima_ocurrencia->i<<endl;
+        it++;
     }
     */
 
+}
+    
+   /*
     nodoHeap * uno = new nodoHeap();
     uno->frecuencia = 5;
     uno->par.first = 1;
@@ -118,6 +142,6 @@ void CompresorRepair::versionAvanzada(){
     mh.imprime();
     mh.modificaClave(5,true);
     mh.imprime();
-    
-}
+    */
+
 

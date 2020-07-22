@@ -126,8 +126,8 @@ bool MaxHeap::isEmpty(){
         return true;
 }
 
-pair<int,int> MaxHeap::max(){
-    return vec_nh.at(1)->par;
+int MaxHeap::max(){
+    return vec_nh.at(1)->frecuencia;
 }
 
 void MaxHeap::modificaClave(int pos, bool aumenta){
