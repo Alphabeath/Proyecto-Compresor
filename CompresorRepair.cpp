@@ -74,17 +74,38 @@ void CompresorRepair::versionAvanzada(){
         int j = 1;
         while(bandera){
             if(mh.max() >= 2){
-                pair<int,int> parAux = mh.removeMax();
-                nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia;
+                /*
+                    Removemos el par que tiene mayor frecuencia en el heap
+                */
+                pair<int,int> parAux = mh.removeMax();  
+                /*
+                    Obtenemos el puntero de la primera ocurrencia en la listaAvanzada
+                */
+                nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia; 
+                //-->Aqui deberia estar el for o while
+                /*
+                    Inicializamos el nuevo puntero sigma +j de la lista avanzada
+                */
                 nodoAd * nuevoAd = new nodoAd();
                 nuevoAd->anterior = auxAd->anterior;
                 nuevoAd->siguiente = auxAd->siguiente->siguiente;
                 nuevoAd->n = sigma + j;
+                /*
+                    Actualizamos los nodos que estan justo antes y despues del par
+                    notar que estos pueden no existir y por ende guardara una referencia NULL
+                */
                 auxAd->anterior->siguiente = nuevoAd;
                 auxAd->siguiente->siguiente->anterior = nuevoAd;
+                /*
+                    Borramos el par que vamos a reemplazar por el nodo sigma + j
+                */
                 delete auxAd->siguiente;
                 delete auxAd;
                 map<pair<int,int>,pairOfMap>::iterator it;
+                /*
+                    Si existe un nodo anterior al par a reemplazar creamos un nuevo par
+                    o aumentamos la frecuencia en caso que vuelva a coincidir
+                */
                 if(nuevoAd->anterior!=NULL){
                     pair<int,int> parAnt;
                     parAnt.first = nuevoAd->anterior->n;
@@ -101,23 +122,47 @@ void CompresorRepair::versionAvanzada(){
                         
                     }   
                 }
+                /*
+                    Si existe un nodo siguiente al par a reemplazar creamos un nuevo par
+                    o aumentamos la frecuencia en caso que vuelva a coincidir
+                */
                 if(nuevoAd->siguiente != NULL){
+                    /*
+                        Inicializamos el par (nodo sigma + j, nodo siguiente a este)
+                    */
                     pair<int,int> parSig;
                     parSig.first = nuevoAd->n;
                     parSig.second = nuevoAd->siguiente->n;
+                    /*
+                        Preguntamos si este para se encontraba ya en el mapa avanzado,
+                        si no se encontraba se agrega a este y al heap,
+                        en caso contrario solo se aumenta su frecuencia en el heap
+                    */
                     it = mapaAvanzado.find(parSig);
 	                if(it == mapaAvanzado.end()){
+                        /*
+                            Se inicializa la estructura pairOfMap correspondiente al valor en el mapa
+                        */
                         auxP.primera_ocurrencia = nuevoAd;
                         auxP.ultima_ocurrencia = nuevoAd;
+                        /*
+                            Se crea un nuevo puntero para el heap de dicho par 
+                        */
                         nodoHeap * auxHeap = new nodoHeap();
                         auxHeap->par = parSig;
                         auxHeap->frecuencia = 1;
+                        /*
+                            Agregamos este puntero del heap a la estructura
+                        */
                         auxP.nodoDelHeap = auxHeap;
+                        /*
+                            Finalmente se añade el par al mapa y al heap
+                        */
                         mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
                         mh.insert(auxHeap);
                     }else{
 
-
+                        //pendiente revision de esta parte 
                         it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
                         
                         

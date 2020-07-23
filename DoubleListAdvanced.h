@@ -22,7 +22,6 @@ class DoubleListAdvanced{
         struct nodoAd * getHead();
         void insertFirst(int i);
         void insertLast(int i);
-        void removeAtPair(pair<int,int> par, int reemplazo);
         void imprime();
         int size();
         bool isEmpty();
