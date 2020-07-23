@@ -82,7 +82,58 @@ void CompresorRepair::versionAvanzada(){
                     Obtenemos el puntero de la primera ocurrencia en la listaAvanzada
                 */
                 nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia; 
+
                 //-->Aqui deberia estar el for o while
+                /*
+                    Verificamos la existencia de pares contiguos al nodo a reemplazar (nodo sigma + j)
+                */
+                map<pair<int,int>,pairOfMap>::iterator it;
+                if(auxAd->anterior != NULL){
+                    pair<int,int> auxAdAnt;
+                    auxAdAnt.first = auxAd->anterior->n;
+                    auxAdAnt.second = auxAd->n;
+                    it = mapaAvanzado.find(auxAdAnt);
+                    if((it->second.primera_ocurrencia->siguiente == auxAd)||(it->second.ultima_ocurrencia->siguiente == auxAd)){
+                        /*
+                        En caso de que el par inmediatamente anterior al par a cambiar,
+                        se la primera o la ultima ocurrencia de si mismo, se actualizan 
+                        los punteros del mapa y de la lista avanzada
+                        */
+                        if(it->second.primera_ocurrencia->siguiente == auxAd){
+                            if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
+                                it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
+                            }else{
+                                it->second.primera_ocurrencia = NULL;
+                            }
+                        }
+                        if(it->second.ultima_ocurrencia->siguiente == auxAd){
+                            if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
+                                it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
+                                it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                            }else{
+                                it->second.ultima_ocurrencia = NULL;
+                            }
+                        }
+                    }else{
+                        /*
+                        En caso de que el par inmediatamente anterior al par a cambiar,
+                        no sea la primera o la ultima ocurrencia de si mismo, se  
+                        actualizan solo los punteros de la lista avanzada
+                        */
+                        
+                    }
+                    mh.modificaClave(it->second.nodoDelHeap->posicion,false);
+                }
+                if(auxAd->siguiente->siguiente != NULL){
+                    pair<int,int> auxAdSig;
+                    auxAdSig.first = auxAd->siguiente->n;
+                    auxAdSig.second = auxAd->siguiente->siguiente->n;
+                    it = mapaAvanzado.find(auxAdSig);
+                    mh.modificaClave(it->second.nodoDelHeap->posicion,false);
+  
+                }
+                
                 /*
                     Inicializamos el nuevo puntero sigma +j de la lista avanzada
                 */
@@ -101,7 +152,6 @@ void CompresorRepair::versionAvanzada(){
                 */
                 delete auxAd->siguiente;
                 delete auxAd;
-                map<pair<int,int>,pairOfMap>::iterator it;
                 /*
                     Si existe un nodo anterior al par a reemplazar creamos un nuevo par
                     o aumentamos la frecuencia en caso que vuelva a coincidir
@@ -161,14 +211,9 @@ void CompresorRepair::versionAvanzada(){
                         mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
                         mh.insert(auxHeap);
                     }else{
-
-                        //pendiente revision de esta parte 
                         it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
-                        
-                        
-                        
-                        uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                        it->second.ultima_ocurrencia = uno;
+                        nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                        it->second.ultima_ocurrencia = nuevoAd;
                         mh.modificaClave(it->second.nodoDelHeap->posicion, true);
                     }
                 }
