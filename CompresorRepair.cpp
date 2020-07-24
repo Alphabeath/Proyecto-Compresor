@@ -46,6 +46,7 @@ void CompresorRepair::versionAvanzada(){
         pair<int,int> auxI;
         pairOfMap auxP;
         nodoHeap * auxH;
+        nodoAd * nodoTail = Ad->getTail();
         nodoAd * uno = Ad->getHead()->siguiente;
         nodoAd * dos = Ad->getHead()->siguiente->siguiente;
         for(int i = 0; i<Ad->size()-1; ++i){
@@ -78,146 +79,221 @@ void CompresorRepair::versionAvanzada(){
                     Removemos el par que tiene mayor frecuencia en el heap
                 */
                 pair<int,int> parAux = mh.removeMax();  
+                //cout<<"par : ("<<parAux.first<<","<<parAux.second<<")"<<endl;
                 /*
+                
                     Obtenemos el puntero de la primera ocurrencia en la listaAvanzada
                 */
-                nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia; 
+                nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia;
+                //cout<<"primera ocurrencia :"<<auxAd->n<<endl;
 
-                //-->Aqui deberia estar el for o while
-                /*
-                    Verificamos la existencia de pares contiguos al nodo a reemplazar (nodo sigma + j)
-                */
-                map<pair<int,int>,pairOfMap>::iterator it;
-                if(auxAd->anterior != NULL){
-                    pair<int,int> auxAdAnt;
-                    auxAdAnt.first = auxAd->anterior->n;
-                    auxAdAnt.second = auxAd->n;
-                    it = mapaAvanzado.find(auxAdAnt);
-                    if((it->second.primera_ocurrencia->siguiente == auxAd)||(it->second.ultima_ocurrencia->siguiente == auxAd)){
-                        /*
-                        En caso de que el par inmediatamente anterior al par a cambiar,
-                        se la primera o la ultima ocurrencia de si mismo, se actualizan 
-                        los punteros del mapa y de la lista avanzada
-                        */
-                        if(it->second.primera_ocurrencia->siguiente == auxAd){
-                            if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
-                                it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
-                                it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
-                            }else{
-                                it->second.primera_ocurrencia = NULL;
-                            }
-                        }
-                        if(it->second.ultima_ocurrencia->siguiente == auxAd){
-                            if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
-                                it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
-                                it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
-                            }else{
-                                it->second.ultima_ocurrencia = NULL;
-                            }
-                        }
-                    }else{
-                        /*
-                        En caso de que el par inmediatamente anterior al par a cambiar,
-                        no sea la primera o la ultima ocurrencia de si mismo, se  
-                        actualizan solo los punteros de la lista avanzada
-                        */
-                        
-                    }
-                    mh.modificaClave(it->second.nodoDelHeap->posicion,false);
-                }
-                if(auxAd->siguiente->siguiente != NULL){
-                    pair<int,int> auxAdSig;
-                    auxAdSig.first = auxAd->siguiente->n;
-                    auxAdSig.second = auxAd->siguiente->siguiente->n;
-                    it = mapaAvanzado.find(auxAdSig);
-                    mh.modificaClave(it->second.nodoDelHeap->posicion,false);
-  
-                }
-                
-                /*
-                    Inicializamos el nuevo puntero sigma +j de la lista avanzada
-                */
-                nodoAd * nuevoAd = new nodoAd();
-                nuevoAd->anterior = auxAd->anterior;
-                nuevoAd->siguiente = auxAd->siguiente->siguiente;
-                nuevoAd->n = sigma + j;
-                /*
-                    Actualizamos los nodos que estan justo antes y despues del par
-                    notar que estos pueden no existir y por ende guardara una referencia NULL
-                */
-                auxAd->anterior->siguiente = nuevoAd;
-                auxAd->siguiente->siguiente->anterior = nuevoAd;
-                /*
-                    Borramos el par que vamos a reemplazar por el nodo sigma + j
-                */
-                delete auxAd->siguiente;
-                delete auxAd;
-                /*
-                    Si existe un nodo anterior al par a reemplazar creamos un nuevo par
-                    o aumentamos la frecuencia en caso que vuelva a coincidir
-                */
-                if(nuevoAd->anterior!=NULL){
-                    pair<int,int> parAnt;
-                    parAnt.first = nuevoAd->anterior->n;
-                    parAnt.second = nuevoAd->n;
-                    it = mapaAvanzado.find(parAnt);
-	                if(it == mapaAvanzado.end()){
-                        nodoHeap * auxHeap = new nodoHeap();
-                        auxHeap->par = parAnt;
-                        auxHeap->frecuencia = 1;
-                        
-                        mh.insert(auxHeap);
-                    }else{
-                        mh.modificaClave(it->second.nodoDelHeap->posicion, true);
-                        
-                    }   
-                }
-                /*
-                    Si existe un nodo siguiente al par a reemplazar creamos un nuevo par
-                    o aumentamos la frecuencia en caso que vuelva a coincidir
-                */
-                if(nuevoAd->siguiente != NULL){
+                while(auxAd != NULL){
+                    //cout<<"auxAd"<<auxAd->n<<endl;
+                    //if(auxAd != NULL)   cout<<"anterior: "<<auxAd->anterior->n<<endl;
                     /*
-                        Inicializamos el par (nodo sigma + j, nodo siguiente a este)
+                        Verificamos la existencia de pares contiguos al nodo a reemplazar (nodo sigma + j)
                     */
-                    pair<int,int> parSig;
-                    parSig.first = nuevoAd->n;
-                    parSig.second = nuevoAd->siguiente->n;
-                    /*
-                        Preguntamos si este para se encontraba ya en el mapa avanzado,
-                        si no se encontraba se agrega a este y al heap,
-                        en caso contrario solo se aumenta su frecuencia en el heap
-                    */
-                    it = mapaAvanzado.find(parSig);
-	                if(it == mapaAvanzado.end()){
-                        /*
-                            Se inicializa la estructura pairOfMap correspondiente al valor en el mapa
-                        */
-                        auxP.primera_ocurrencia = nuevoAd;
-                        auxP.ultima_ocurrencia = nuevoAd;
-                        /*
-                            Se crea un nuevo puntero para el heap de dicho par 
-                        */
-                        nodoHeap * auxHeap = new nodoHeap();
-                        auxHeap->par = parSig;
-                        auxHeap->frecuencia = 1;
-                        /*
-                            Agregamos este puntero del heap a la estructura
-                        */
-                        auxP.nodoDelHeap = auxHeap;
-                        /*
-                            Finalmente se añade el par al mapa y al heap
-                        */
-                        mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
-                        mh.insert(auxHeap);
-                    }else{
-                        it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
-                        nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                        it->second.ultima_ocurrencia = nuevoAd;
-                        mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                    map<pair<int,int>,pairOfMap>::iterator it;
+                    if(auxAd->anterior != NULL){
+                        pair<int,int> auxAdAnt;
+                        auxAdAnt.first = auxAd->anterior->n;
+                        auxAdAnt.second = auxAd->n;
+                        it = mapaAvanzado.find(auxAdAnt);
+                        if((it->second.primera_ocurrencia->siguiente == auxAd)||(it->second.ultima_ocurrencia->siguiente == auxAd)){
+                            /*
+                            En caso de que el par inmediatamente anterior al par a cambiar,
+                            se la primera o la ultima ocurrencia de si mismo, se actualizan 
+                            los punteros del mapa y de la lista avanzada
+                            */
+                            if(it->second.primera_ocurrencia->siguiente == auxAd){
+                                if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
+                                    it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
+                                    it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                }else{
+                                    it->second.primera_ocurrencia = NULL;
+                                }
+                            }
+                            if(it->second.ultima_ocurrencia->siguiente == auxAd){
+                                if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
+                                    it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                                    it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
+                                }else{
+                                    it->second.ultima_ocurrencia = NULL;
+                                }
+                            }
+                        }else{
+                            /*
+                            En caso de que el par inmediatamente anterior al par a cambiar,
+                            no sea la primera o la ultima ocurrencia de si mismo, se  
+                            actualizan solo los punteros de la lista avanzada
+                            */
+                            if(auxAd->anterior->ocurrencia_anterior != NULL)
+                                auxAd->anterior->ocurrencia_anterior->ocurrencia_siguiente = auxAd->anterior->ocurrencia_siguiente;
+                            if(auxAd->anterior->ocurrencia_siguiente != NULL)
+                                auxAd->anterior->ocurrencia_siguiente->ocurrencia_anterior = auxAd->anterior->ocurrencia_anterior;
+                        
+                        }
+                        mh.modificaClave(it->second.nodoDelHeap->posicion,false);
                     }
+                    if((auxAd->siguiente->siguiente != NULL)&&(auxAd->siguiente->siguiente != nodoTail)){
+                        pair<int,int> auxAdSig;
+                        auxAdSig.first = auxAd->siguiente->n;
+                        auxAdSig.second = auxAd->siguiente->siguiente->n;
+                        it = mapaAvanzado.find(auxAdSig);
+                        if((it->second.primera_ocurrencia == auxAd->siguiente)||(it->second.ultima_ocurrencia == auxAd->siguiente)){
+                            /*
+                            En caso de que el par inmediatamente anterior al par a cambiar,
+                            se la primera o la ultima ocurrencia de si mismo, se actualizan 
+                            los punteros del mapa y de la lista avanzada
+                            */
+                            if(it->second.primera_ocurrencia == auxAd->siguiente){
+                                if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
+                                    it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
+                                    it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                }else{
+                                    it->second.primera_ocurrencia = NULL;
+                                }
+                            }
+                            if(it->second.ultima_ocurrencia == auxAd->siguiente){
+                                if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
+                                    it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                                    it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
+                                }else{
+                                    it->second.ultima_ocurrencia = NULL;
+                                }
+                            }
+                        }else{
+                            /*
+                            En caso de que el par inmediatamente anterior al par a cambiar,
+                            no sea la primera o la ultima ocurrencia de si mismo, se  
+                            actualizan solo los punteros de la lista avanzada
+                            */
+                            if(auxAd->siguiente->ocurrencia_anterior != NULL)
+                                auxAd->siguiente->ocurrencia_anterior->ocurrencia_siguiente = auxAd->siguiente->ocurrencia_siguiente;
+                            if(auxAd->siguiente->ocurrencia_siguiente != NULL)
+                                auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
+                        
+                        }
+                        mh.modificaClave(it->second.nodoDelHeap->posicion,false); 
+                    }
+                    /*
+                        Inicializamos el nuevo puntero sigma +j de la lista avanzada
+                    */
+                    nodoAd * nuevoAd = new nodoAd();
+                    nuevoAd->anterior = auxAd->anterior;
+                    nuevoAd->siguiente = auxAd->siguiente->siguiente;
+                    nuevoAd->n = sigma + j;
+                    /*
+                        Actualizamos los nodos que estan justo antes y despues del par
+                        notar que estos pueden no existir y por ende guardara una referencia NULL
+                    */
+                    auxAd->anterior->siguiente = nuevoAd;
+                    auxAd->siguiente->siguiente->anterior = nuevoAd;
+                    /*
+                        Borramos el par que vamos a reemplazar por el nodo sigma + j
+                    */
+                    delete auxAd->siguiente;
+                    delete auxAd;
+                    /*
+                        Si existe un nodo anterior al par a reemplazar creamos un nuevo par
+                        o aumentamos la frecuencia en caso que vuelva a coincidir
+                    */
+                    if(nuevoAd->anterior!=NULL){
+                        pair<int,int> parAnt;
+                        parAnt.first = nuevoAd->anterior->n;
+                        parAnt.second = nuevoAd->n;
+                        it = mapaAvanzado.find(parAnt);
+	                    if(it == mapaAvanzado.end()){
+                            /*
+                                Se inicializa la estructura pairOfMap correspondiente al valor en el mapa
+                            */
+                            auxP.primera_ocurrencia = nuevoAd;
+                            auxP.ultima_ocurrencia = nuevoAd;
+                            /*
+                                Se crea un nuevo puntero para el heap de dicho par 
+                            */
+                            nodoHeap * auxHeap = new nodoHeap();
+                            auxHeap->par = parAnt;
+                            auxHeap->frecuencia = 1;
+                            /*
+                                Agregamos este puntero del heap a la estructura
+                            */
+                            auxP.nodoDelHeap = auxHeap;
+                            /*
+                                Finalmente se añade el par al mapa y al heap
+                            */
+                            mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parAnt,auxP));
+                            mh.insert(auxHeap);
+                        }else{
+                            it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
+                            nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                            it->second.ultima_ocurrencia = nuevoAd;
+                            mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                        }   
+                    }
+                    /*
+                        Si existe un nodo siguiente al par a reemplazar creamos un nuevo par
+                        o aumentamos la frecuencia en caso que vuelva a coincidir
+                    */
+                    if((nuevoAd->siguiente != NULL)&&(nuevoAd->siguiente != nodoTail)){
+                        /*
+                            Inicializamos el par (nodo sigma + j, nodo siguiente a este)
+                        */
+                        pair<int,int> parSig;
+                        parSig.first = nuevoAd->n;
+                        parSig.second = nuevoAd->siguiente->n;
+                        /*
+                            Preguntamos si este para se encontraba ya en el mapa avanzado,
+                            si no se encontraba se agrega a este y al heap,
+                            en caso contrario solo se aumenta su frecuencia en el heap
+                        */
+                        it = mapaAvanzado.find(parSig);
+	                    if(it == mapaAvanzado.end()){
+                            /*
+                                Se inicializa la estructura pairOfMap correspondiente al valor en el mapa
+                            */
+                            auxP.primera_ocurrencia = nuevoAd;
+                            auxP.ultima_ocurrencia = nuevoAd;
+                            /*
+                                Se crea un nuevo puntero para el heap de dicho par 
+                            */
+                            nodoHeap * auxHeap = new nodoHeap();
+                            auxHeap->par = parSig;
+                            auxHeap->frecuencia = 1;
+                            /*
+                                Agregamos este puntero del heap a la estructura
+                            */
+                            auxP.nodoDelHeap = auxHeap;
+                            /*
+                                Finalmente se añade el par al mapa y al heap
+                            */
+                            mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
+                            mh.insert(auxHeap);
+                        }else{
+                            it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
+                            nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                            it->second.ultima_ocurrencia = nuevoAd;
+                            mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                        }
+                    }
+                    auxAd = auxAd->ocurrencia_siguiente;
                 }
                 ++j;
+                //cout<<"tamo ready"<<endl;
+                //mh.imprime();
+                if(j == 2)
+                    Ad->imprime();
+
+
+
+
+
+
+                cout<<"sale"<<endl;
+
+
+
+                
             }else{
                 bandera = false;
             }
@@ -237,7 +313,6 @@ void CompresorRepair::imprime(){
         it++;
     }
     */
-
 }
     
    /*

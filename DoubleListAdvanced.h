@@ -20,6 +20,7 @@ class DoubleListAdvanced{
         DoubleListAdvanced();
         ~DoubleListAdvanced();
         struct nodoAd * getHead();
+        struct nodoAd * getTail();
         void insertFirst(int i);
         void insertLast(int i);
         void imprime();

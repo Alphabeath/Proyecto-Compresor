@@ -26,6 +26,9 @@ DoubleListAdvanced::~DoubleListAdvanced(){
 struct nodoAd * DoubleListAdvanced::getHead(){
     return head;
 }
+struct nodoAd* DoubleListAdvanced::getTail(){
+    return tail;
+}
 
 void DoubleListAdvanced::insertFirst(int i){
     nodoAd *a = new nodoAd();
@@ -70,9 +73,9 @@ void DoubleListAdvanced::insertLast(int i){
 
 
 void DoubleListAdvanced::imprime(){
-    nodoAd * aux = head;
-    for(int i = 0; i< mysize; ++i){
-        cout<<aux->siguiente->n<<" ";
+    nodoAd * aux = head->siguiente;
+    while(aux!= tail){
+        cout<<aux->n<<" ";
         aux = aux->siguiente;
     }
     /*
@@ -91,7 +94,6 @@ void DoubleListAdvanced::imprime(){
         aux = aux->siguiente;
     }
     */
-    cout<<endl;
 }
 
 
