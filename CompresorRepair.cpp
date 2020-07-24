@@ -283,7 +283,8 @@ void CompresorRepair::versionAvanzada(){
                 //mh.imprime();
                 if(j == 2)
                     Ad->imprime();
-
+                for (map<pair<int,int>,pairOfMap>::iterator it=mapaAvanzado.begin(); it!=mapaAvanzado.end(); ++it)
+                    cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " frecuencia: "<<it->second.nodoDelHeap->frecuencia<<endl;
 
 
 
