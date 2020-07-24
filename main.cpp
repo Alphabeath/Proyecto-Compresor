@@ -9,14 +9,14 @@ int main()
 {
    DoubleListAdvanced * Ad = new DoubleListAdvanced();
    Ad->insertLast(1);
-   Ad->insertLast(2);
-   Ad->insertLast(9);
    Ad->insertLast(1);
-   Ad->insertLast(2);
-   Ad->insertLast(9);
-   Ad->insertLast(8);
-   Ad->insertLast(2);
-   Ad->insertLast(9);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
 
    //cout<<"---- Lista ----"<<endl;
    //Ad->imprime();
