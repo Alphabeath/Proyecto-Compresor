@@ -18,13 +18,13 @@ int main()
    Ad->insertLast(2);
    Ad->insertLast(9);
 
-   cout<<"---- Lista ----"<<endl;
-   Ad->imprime();
-   cout<<"----------"<<endl;
+   //cout<<"---- Lista ----"<<endl;
+   //Ad->imprime();
+   //cout<<"----------"<<endl;
    CompresorRepair *c = new CompresorRepair(Ad);
    //c->versionDirecta();
    c->versionAvanzada();
-   c->imprime();
+   //c->imprime();
    //Ad->imprime();
    
 
