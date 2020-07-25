@@ -139,9 +139,9 @@ void CompresorRepair::versionAvanzada(){
                                 auxAd->anterior->ocurrencia_siguiente->ocurrencia_anterior = auxAd->anterior->ocurrencia_anterior;
                         
                         }
-                        if(auxAd->anterior == it->second.ultima_ocurrencia){
-                            auxAd->anterior->ocurrencia_anterior = NULL;
-                            auxAd->anterior->ocurrencia_siguiente = NULL;
+                        if((auxAd->anterior->n != auxAd->anterior->anterior->n)||(auxAd->n != auxAd->anterior->n)){
+                            //auxAd->anterior->ocurrencia_anterior = NULL;
+                            //auxAd->anterior->ocurrencia_siguiente = NULL;
                             mh.modificaClave(it->second.nodoDelHeap->posicion,false);
                         }
                     }
@@ -186,8 +186,8 @@ void CompresorRepair::versionAvanzada(){
                                 auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
                         
                         }
-                        auxAd->anterior->ocurrencia_anterior = NULL;
-                        auxAd->anterior->ocurrencia_siguiente = NULL;
+                        //auxAd->anterior->ocurrencia_anterior = NULL;
+                        //auxAd->anterior->ocurrencia_siguiente = NULL;
                         mh.modificaClave(it->second.nodoDelHeap->posicion,false); 
                     }
                     /*
@@ -245,7 +245,7 @@ void CompresorRepair::versionAvanzada(){
                             if(nuevoAd->anterior != it->second.ultima_ocurrencia){
                                 if(nuevoAd->anterior != it->second.ultima_ocurrencia->siguiente){
                                     it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd->anterior;
-                                    nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                                    nuevoAd->anterior->ocurrencia_anterior = it->second.ultima_ocurrencia;
                                     it->second.ultima_ocurrencia = nuevoAd->anterior; 
                                     mh.modificaClave(it->second.nodoDelHeap->posicion, true);
                                 }
