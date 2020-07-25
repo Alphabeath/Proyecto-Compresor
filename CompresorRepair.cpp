@@ -97,6 +97,7 @@ void CompresorRepair::versionAvanzada(){
                 //cout<<"primera ocurrencia :"<<auxAd->ocurrencia_siguiente->ocurrencia_siguiente->n<<endl;
                 
                 while(auxAd != NULL){
+                    cout<<"("<<parAux.first<<","<<parAux.second<<")"<<endl;
                     //cout<<"auxAd"<<auxAd->n<<endl;
                     //if(auxAd != NULL)   cout<<"anterior: "<<auxAd->anterior->n<<endl;
                     /*
@@ -138,7 +139,11 @@ void CompresorRepair::versionAvanzada(){
                                 auxAd->anterior->ocurrencia_siguiente->ocurrencia_anterior = auxAd->anterior->ocurrencia_anterior;
                         
                         }
-                        mh.modificaClave(it->second.nodoDelHeap->posicion,false);
+                        if(auxAd->anterior == it->second.ultima_ocurrencia){
+                            auxAd->anterior->ocurrencia_anterior = NULL;
+                            auxAd->anterior->ocurrencia_siguiente = NULL;
+                            mh.modificaClave(it->second.nodoDelHeap->posicion,false);
+                        }
                     }
                     
                     if((auxAd->siguiente->siguiente != NULL)&&(auxAd->siguiente->siguiente != nodoTail)){
@@ -181,6 +186,8 @@ void CompresorRepair::versionAvanzada(){
                                 auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
                         
                         }
+                        auxAd->anterior->ocurrencia_anterior = NULL;
+                        auxAd->anterior->ocurrencia_siguiente = NULL;
                         mh.modificaClave(it->second.nodoDelHeap->posicion,false); 
                     }
                     /*
@@ -193,7 +200,6 @@ void CompresorRepair::versionAvanzada(){
                     nuevoAd->n = sigma + j;
                     /*
                         Actualizamos los nodos que estan justo antes y despues del par
-                        notar que estos pueden no existir y por ende guardara una referencia NULL
                     */
                     auxAd->anterior->siguiente = nuevoAd;
                     auxAd->siguiente->siguiente->anterior = nuevoAd;
@@ -258,8 +264,6 @@ void CompresorRepair::versionAvanzada(){
                         pair<int,int> parSig;
                         parSig.first = nuevoAd->n;
                         parSig.second = nuevoAd->siguiente->n;
-
-                        cout<<"("<<parSig.first<<","<<parSig.second<<")"<<endl;
                         /*
                             Preguntamos si este para se encontraba ya en el mapa avanzado,
                             si no se encontraba se agrega a este y al heap,
@@ -288,10 +292,12 @@ void CompresorRepair::versionAvanzada(){
                             mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
                             mh.insert(auxHeap);
                         }else{
+                            if(it->second.nodoDelHeap->frecuencia > 0){
                                 it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
                                 nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
                                 it->second.ultima_ocurrencia = nuevoAd;
                                 mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                            }
                         }
                     }
 

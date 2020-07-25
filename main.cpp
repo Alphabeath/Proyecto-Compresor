@@ -13,10 +13,14 @@ int main()
    Ad->insertLast(1);
    Ad->insertLast(2);
    Ad->insertLast(1);
-   Ad->insertLast(2);
    Ad->insertLast(1);
    Ad->insertLast(2);
    Ad->insertLast(1);
+   Ad->insertLast(2);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(1);
+   Ad->insertLast(2);
    Ad->insertLast(1);
    //cout<<"---- Lista ----"<<endl;
    //Ad->imprime();
@@ -26,6 +30,7 @@ int main()
    c->versionAvanzada();
    //c->imprime();
    //Ad->imprime();
+   
    
 
 
