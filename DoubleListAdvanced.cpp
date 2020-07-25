@@ -75,21 +75,21 @@ void DoubleListAdvanced::insertLast(int i){
 void DoubleListAdvanced::imprime(){
     nodoAd * aux = head->siguiente;
     while(aux != tail){
-        cout<<aux->n<<" ";
-        /*
+        //cout<<aux->n<<" ";
+        
         cout<<"anterior <--"<<aux->anterior->n<<" -- ("<<aux->n<<") -- siguiente -->"<<aux->siguiente->n;
         if(aux->ocurrencia_anterior != NULL)
-             cout<<" -- ocurrencia_anterior: "<<aux->ocurrencia_anterior->i;
+             cout<<" -- ocurrencia_anterior: "<<aux->ocurrencia_anterior->n;
         else
             cout<<" -- ocurrencia_anterior: "<<"null";
         if(aux->ocurrencia_siguiente != NULL)
-            cout<<" -- ocurrencia_siguiente: "<<aux->ocurrencia_siguiente->i<<endl;
+            cout<<" -- ocurrencia_siguiente: "<<aux->ocurrencia_siguiente->n<<endl;
         else
             cout<<" -- ocurrencia_siguiente: "<<"null"<<endl;
-        */
+        
         aux = aux->siguiente;
     }
-    cout<<endl;
+    cout<<endl<<endl;
     
 }
 

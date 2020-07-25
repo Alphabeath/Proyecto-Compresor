@@ -65,14 +65,18 @@ void CompresorRepair::versionAvanzada(){
                 mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(auxI,auxP));
                 mh.insert(auxH);
             }else{
-                it->second.ultima_ocurrencia->ocurrencia_siguiente = uno;
-                uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                it->second.ultima_ocurrencia = uno;
-                mh.modificaClave(it->second.nodoDelHeap->posicion,true);
+                if(uno != it->second.ultima_ocurrencia->siguiente){
+                    it->second.ultima_ocurrencia->ocurrencia_siguiente = uno;
+                    uno->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                    it->second.ultima_ocurrencia = uno;
+                    mh.modificaClave(it->second.nodoDelHeap->posicion,true);
+                }
             }
             uno = dos;
             dos = dos->siguiente;
         } 
+        Ad->imprime();
+        mh.imprime();
         //for (map<pair<int,int>,pairOfMap>::iterator it=mapaAvanzado.begin(); it!=mapaAvanzado.end(); ++it)
             //cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " Su valor : ("<< it->second.nodoDelHeap->par.first<<","<<it->second.nodoDelHeap->par.second<<")"<<endl;
 
@@ -83,11 +87,12 @@ void CompresorRepair::versionAvanzada(){
                     Removemos el par que tiene mayor frecuencia en el heap
                 */
                 pair<int,int> parAux = mh.removeMax();  
-                cout<<"par : ("<<parAux.first<<","<<parAux.second<<")"<<endl;
+                //cout<<"par : ("<<parAux.first<<","<<parAux.second<<")"<<endl;
                 /*
                     Obtenemos el puntero de la primera ocurrencia en la listaAvanzada
                 */
                 nodoAd * auxAd = mapaAvanzado.at(parAux).primera_ocurrencia;
+                //if(j==2) cout<<"la ocurrencia siguiente de (1,1) :"<<auxAd->ocurrencia_siguiente->siguiente->n<<endl;
                 
                 //cout<<"primera ocurrencia :"<<auxAd->ocurrencia_siguiente->ocurrencia_siguiente->n<<endl;
                 
@@ -113,16 +118,12 @@ void CompresorRepair::versionAvanzada(){
                                 if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
                                     it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
                                     it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
-                                }else{
-                                    //it->second.primera_ocurrencia = NULL;
                                 }
                             }
                             if(it->second.ultima_ocurrencia->siguiente == auxAd){
                                 if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
                                     it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
                                     it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
-                                }else{
-                                    //it->second.ultima_ocurrencia = NULL;
                                 }
                             }
                         }else{
@@ -141,7 +142,6 @@ void CompresorRepair::versionAvanzada(){
                     }
                     
                     if((auxAd->siguiente->siguiente != NULL)&&(auxAd->siguiente->siguiente != nodoTail)){
-                        
                         pair<int,int> auxAdSig;
                         auxAdSig.first = auxAd->siguiente->n;
                         auxAdSig.second = auxAd->siguiente->siguiente->n;
@@ -158,16 +158,15 @@ void CompresorRepair::versionAvanzada(){
                                 if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
                                     it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
                                     it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
-                                }else{
-                                    //it->second.primera_ocurrencia = NULL;
                                 }
                             }
                             if(it->second.ultima_ocurrencia == auxAd->siguiente){
                                 if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
+                                    //if( j==2 ) cout<<"ocurrencia siguiente :"<<auxAd->ocurrencia_siguiente->n<<endl;
                                     it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                                    //if( j==2 ) cout<<"ocurrencia siguiente :"<<auxAd->ocurrencia_siguiente->n<<endl;
                                     it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
-                                }else{
-                                    //it->second.ultima_ocurrencia = NULL;
+                                    
                                 }
                             }
                         }else{
@@ -202,7 +201,10 @@ void CompresorRepair::versionAvanzada(){
                         Borramos el par que vamos a reemplazar por el nodo sigma + j
                     */
                     delete auxAd->siguiente;
-                    delete auxAd;
+                    nodoAd * auxDelete = auxAd;
+                    //if(j==2) cout<<"AuxAd tiene : ("<<auxAd->n<<","<<auxAd->siguiente->n<<")"<<endl;
+                    auxAd = auxAd->ocurrencia_siguiente;
+                    delete auxDelete;
                     /*
                         Si existe un nodo anterior al par a reemplazar creamos un nuevo par
                         o aumentamos la frecuencia en caso que vuelva a coincidir
@@ -234,12 +236,17 @@ void CompresorRepair::versionAvanzada(){
                             mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parAnt,auxP));
                             mh.insert(auxHeap);
                         }else{
-                            it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd->anterior;
-                            nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                            it->second.ultima_ocurrencia = nuevoAd->anterior; 
-                            mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                            if(nuevoAd->anterior != it->second.ultima_ocurrencia){
+                                if(nuevoAd->anterior != it->second.ultima_ocurrencia->siguiente){
+                                    it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd->anterior;
+                                    nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                                    it->second.ultima_ocurrencia = nuevoAd->anterior; 
+                                    mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                                }
+                            }
                         }   
                     }
+                    
                     /*
                         Si existe un nodo siguiente al par a reemplazar creamos un nuevo par
                         o aumentamos la frecuencia en caso que vuelva a coincidir
@@ -251,6 +258,8 @@ void CompresorRepair::versionAvanzada(){
                         pair<int,int> parSig;
                         parSig.first = nuevoAd->n;
                         parSig.second = nuevoAd->siguiente->n;
+
+                        cout<<"("<<parSig.first<<","<<parSig.second<<")"<<endl;
                         /*
                             Preguntamos si este para se encontraba ya en el mapa avanzado,
                             si no se encontraba se agrega a este y al heap,
@@ -279,14 +288,17 @@ void CompresorRepair::versionAvanzada(){
                             mapaAvanzado.insert(pair<pair<int,int>,pairOfMap>(parSig,auxP));
                             mh.insert(auxHeap);
                         }else{
-                            it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
-                            nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
-                            it->second.ultima_ocurrencia = nuevoAd;
-                            mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                                it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd;
+                                nuevoAd->ocurrencia_anterior = it->second.ultima_ocurrencia;
+                                it->second.ultima_ocurrencia = nuevoAd;
+                                mh.modificaClave(it->second.nodoDelHeap->posicion, true);
                         }
                     }
+
+                    mh.imprime();
                     Ad->imprime();
-                    auxAd = auxAd->ocurrencia_siguiente;
+                    //if((j==2)&& (auxAd!=NULL)) cout<<"el par siguiente de (1,1) :"<<auxAd->ocurrencia_siguiente->n<<endl;
+                    //if((j==2)&& (auxAd!=NULL)) cout<<"el par siguiente de (1,1) :"<<auxAd->ocurrencia_siguiente->n<<endl;
                 }
                 ++j;
                 /*

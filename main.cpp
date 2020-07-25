@@ -11,13 +11,13 @@ int main()
    Ad->insertLast(1);
    Ad->insertLast(1);
    Ad->insertLast(1);
+   Ad->insertLast(2);
+   Ad->insertLast(1);
+   Ad->insertLast(2);
+   Ad->insertLast(1);
+   Ad->insertLast(2);
    Ad->insertLast(1);
    Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-
    //cout<<"---- Lista ----"<<endl;
    //Ad->imprime();
    //cout<<"----------"<<endl;
