@@ -8,24 +8,13 @@ using namespace std;
 int main()
 {
    DoubleLinkedList * Ad = new DoubleLinkedList();
-   Ad->insertLast(5);
-   Ad->insertLast(3);
-   Ad->insertLast(7);
-   Ad->insertLast(2);
    Ad->insertLast(1);
-   Ad->insertLast(5);
-   Ad->insertLast(3);
-   Ad->insertLast(2);
-   Ad->insertLast(9);
-   Ad->insertLast(9);
-   Ad->insertLast(9);
-   Ad->insertLast(3);
    Ad->insertLast(1);
    Ad->insertLast(2);
    Ad->insertLast(1);
+   Ad->insertLast(2);
    Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(3);
+   Ad->insertLast(2);
    Ad->insertLast(1);
    Ad->insertLast(1);
    Ad->insertLast(1);

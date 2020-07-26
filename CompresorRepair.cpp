@@ -35,8 +35,7 @@ void CompresorRepair::versionDirecta(){
         }else{
             bandera = false;
         }
-    }  
-    d->imprime();  
+    }    
     //for (map<pair<int,int>,int>::iterator it=mapa.begin(); it!=mapa.end(); ++it)
         //cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " Su valor :"<< it ->second<<endl;
 }
