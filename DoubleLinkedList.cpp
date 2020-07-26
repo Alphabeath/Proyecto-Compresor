@@ -153,8 +153,18 @@ void DoubleLinkedList::revisaPares(map<pair<int,int>,int> & mapa){
     if(mysize > 3){
         nodo * aux1 = head->siguiente;
         nodo * aux2 = aux1->siguiente;
+        pair<int,int> buffer;
+        buffer.first = -1;
+        buffer.second = -1;
         for(int i = 0;i < mysize - 1;i++){
-            ++mapa[{aux1->n,aux2->n}];
+            if((buffer.first != aux1->n)||(buffer.second != aux2->n)){
+                ++mapa[{aux1->n,aux2->n}];
+                buffer.first = aux1->n;
+                buffer.second = aux2->n;
+            }else{
+                buffer.first = -1;
+                buffer.second = -1;
+            }
             aux1 = aux2;
             aux2 = aux2->siguiente;
         }
@@ -166,6 +176,7 @@ void DoubleLinkedList::revisaPares(map<pair<int,int>,int> & mapa){
 int DoubleLinkedList::size(){
     return mysize;
 }
+
 bool DoubleLinkedList::isEmpty(){
     if(mysize > 0)
         return false;

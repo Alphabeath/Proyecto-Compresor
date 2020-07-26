@@ -35,7 +35,8 @@ void CompresorRepair::versionDirecta(){
         }else{
             bandera = false;
         }
-    }    
+    }  
+    d->imprime();  
     //for (map<pair<int,int>,int>::iterator it=mapa.begin(); it!=mapa.end(); ++it)
         //cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " Su valor :"<< it ->second<<endl;
 }
@@ -161,17 +162,28 @@ void CompresorRepair::versionAvanzada(){
                             */
                             if(it->second.primera_ocurrencia == auxAd->siguiente){
                                 if(it->second.primera_ocurrencia->ocurrencia_siguiente != NULL){
-                                    it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
-                                    it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                    if((auxAd->n != auxAd->siguiente->n)&&(auxAd->siguiente->n == auxAd->siguiente->siguiente->n)&&(auxAd->siguiente->siguiente->n == auxAd->siguiente->siguiente->siguiente->n)){
+                                        auxAd->siguiente->siguiente->ocurrencia_siguiente = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                        it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->siguiente;
+                                        auxAd->siguiente->ocurrencia_siguiente = NULL;
+                                        it->second.primera_ocurrencia = auxAd->siguiente->siguiente;
+                                    }else{
+                                        it->second.primera_ocurrencia->ocurrencia_siguiente->ocurrencia_anterior = NULL;
+                                        it->second.primera_ocurrencia = it->second.primera_ocurrencia->ocurrencia_siguiente;
+                                    }
                                 }
                             }
                             if(it->second.ultima_ocurrencia == auxAd->siguiente){
                                 if(it->second.ultima_ocurrencia->ocurrencia_anterior != NULL){
-                                    //if( j==2 ) cout<<"ocurrencia siguiente :"<<auxAd->ocurrencia_siguiente->n<<endl;
-                                    it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
-                                    //if( j==2 ) cout<<"ocurrencia siguiente :"<<auxAd->ocurrencia_siguiente->n<<endl;
-                                    it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
-                                    
+                                    if((auxAd->n != auxAd->siguiente->n)&&(auxAd->siguiente->n == auxAd->siguiente->siguiente->n)&&(auxAd->siguiente->siguiente->n == auxAd->siguiente->siguiente->siguiente->n)){
+                                        auxAd->siguiente->siguiente->ocurrencia_anterior = it->second.ultima_ocurrencia->ocurrencia_anterior;
+                                        it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = auxAd->siguiente->siguiente;
+                                        auxAd->siguiente->ocurrencia_anterior = NULL;
+                                        it->second.ultima_ocurrencia = auxAd->siguiente->siguiente;
+                                    }else{
+                                        it->second.ultima_ocurrencia->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                                        it->second.ultima_ocurrencia = it->second.ultima_ocurrencia->ocurrencia_anterior;
+                                    }
                                 }
                             }
                         }else{
@@ -180,15 +192,25 @@ void CompresorRepair::versionAvanzada(){
                             no sea la primera o la ultima ocurrencia de si mismo, se  
                             actualizan solo los punteros de la lista avanzada
                             */
-                            if(auxAd->siguiente->ocurrencia_anterior != NULL)
-                                auxAd->siguiente->ocurrencia_anterior->ocurrencia_siguiente = auxAd->siguiente->ocurrencia_siguiente;
-                            if(auxAd->siguiente->ocurrencia_siguiente != NULL)
-                                auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
-                        
+                            if((auxAd->n != auxAd->siguiente->n)&&(auxAd->siguiente->n == auxAd->siguiente->siguiente->n)&&(auxAd->siguiente->siguiente->n == auxAd->siguiente->siguiente->siguiente->n)){
+                                auxAd->siguiente->siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
+                                auxAd->siguiente->siguiente->ocurrencia_siguiente = auxAd->siguiente->ocurrencia_siguiente;
+                                auxAd->siguiente->ocurrencia_anterior->ocurrencia_siguiente = auxAd->siguiente->siguiente;
+                                auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->siguiente;
+                                auxAd->siguiente->ocurrencia_siguiente = NULL;
+                                auxAd->siguiente->ocurrencia_anterior = NULL;
+                            }else{
+                                if(auxAd->siguiente->ocurrencia_anterior != NULL)
+                                    auxAd->siguiente->ocurrencia_anterior->ocurrencia_siguiente = auxAd->siguiente->ocurrencia_siguiente;
+                                if(auxAd->siguiente->ocurrencia_siguiente != NULL)
+                                    auxAd->siguiente->ocurrencia_siguiente->ocurrencia_anterior = auxAd->siguiente->ocurrencia_anterior;
+                            }
                         }
                         //auxAd->anterior->ocurrencia_anterior = NULL;
                         //auxAd->anterior->ocurrencia_siguiente = NULL;
-                        mh.modificaClave(it->second.nodoDelHeap->posicion,false); 
+                        if((auxAd->siguiente->n != auxAd->siguiente->siguiente->n)||(auxAd->siguiente->siguiente->n != auxAd->siguiente->siguiente->siguiente->n)){
+                            mh.modificaClave(it->second.nodoDelHeap->posicion,false); 
+                        }
                     }
                     /*
                         Inicializamos el nuevo puntero sigma +j de la lista avanzada
