@@ -30,7 +30,7 @@ void CompresorRepair::versionDirecta(){
             }else{
                 bandera = false;
             }
-            d->imprime();
+            //d->imprime();
             mapa.clear();
         }else{
             bandera = false;
