@@ -23,7 +23,7 @@ void ciclo(int max, int i){
 }
 
 int main(){
-   
+
    int random;
 	cout<<"Random?"<<endl<<"Si (1)"<<endl<<"No (2)"<<endl;
 	cin>>random;
@@ -84,7 +84,7 @@ int main(){
 		}
 	}
 
-   /*
+/* 
 	int max, op, pruebas;
    op=0;
 	cout<<"inserte la cantidad de numeros a insertar"<<endl;
@@ -98,6 +98,7 @@ int main(){
       ++i;
    }
    */
+   
    /*
    DoubleListAdvanced * Ad = new DoubleListAdvanced();
    Ad->insertLast(1);
