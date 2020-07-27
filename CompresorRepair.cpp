@@ -42,7 +42,7 @@ void CompresorRepair::versionDirecta(){
 
 void CompresorRepair::versionAvanzada(){
     if(Ad->size() > 2){
-        bool bandera = true;;
+        bool bandera = true;
         pair<int,int> auxI;
         pairOfMap auxP;
         nodoHeap * auxH;
@@ -75,8 +75,7 @@ void CompresorRepair::versionAvanzada(){
             uno = dos;
             dos = dos->siguiente;
         } 
-        Ad->imprime();
-        mh.imprime();
+        //mh.imprime();
         //for (map<pair<int,int>,pairOfMap>::iterator it=mapaAvanzado.begin(); it!=mapaAvanzado.end(); ++it)
             //cout <<"Primera parte :" << it->first.first <<" Segunda parte: "<< it->first.second << " Su valor : ("<< it->second.nodoDelHeap->par.first<<","<<it->second.nodoDelHeap->par.second<<")"<<endl;
 
@@ -222,6 +221,9 @@ void CompresorRepair::versionAvanzada(){
                     /*
                         Actualizamos los nodos que estan justo antes y despues del par
                     */
+                    if(auxAd->ocurrencia_siguiente!=NULL){
+                        auxAd->ocurrencia_siguiente->ocurrencia_anterior = NULL;
+                    }
                     auxAd->anterior->siguiente = nuevoAd;
                     auxAd->siguiente->siguiente->anterior = nuevoAd;
                     /*
@@ -245,6 +247,18 @@ void CompresorRepair::versionAvanzada(){
                             /*
                                 Se inicializa la estructura pairOfMap correspondiente al valor en el mapa
                             */
+                            if(nuevoAd->anterior->ocurrencia_anterior != NULL){
+                                if(nuevoAd->anterior->ocurrencia_anterior->siguiente->n != nuevoAd->n){  
+                                    nuevoAd->anterior->ocurrencia_anterior->ocurrencia_siguiente = nuevoAd->anterior->ocurrencia_siguiente;
+                                    nuevoAd->anterior->ocurrencia_anterior = NULL;
+                                }
+                            }
+                            if(nuevoAd->anterior->ocurrencia_siguiente != NULL){
+                                if(nuevoAd->anterior->ocurrencia_siguiente->siguiente->n != nuevoAd->n){
+                                    nuevoAd->anterior->ocurrencia_siguiente->ocurrencia_anterior = nuevoAd->anterior->ocurrencia_anterior;
+                                    nuevoAd->anterior->ocurrencia_siguiente = NULL;
+                                }
+                            }           
                             auxP.primera_ocurrencia = nuevoAd->anterior;
                             auxP.ultima_ocurrencia = nuevoAd->anterior;
                             /*
@@ -265,10 +279,43 @@ void CompresorRepair::versionAvanzada(){
                         }else{
                             if(nuevoAd->anterior != it->second.ultima_ocurrencia){
                                 if(nuevoAd->anterior != it->second.ultima_ocurrencia->siguiente){
+                                    if(nuevoAd->anterior->ocurrencia_anterior != NULL){
+                                        if(nuevoAd->anterior->ocurrencia_anterior->siguiente->n != nuevoAd->n){
+                                            nuevoAd->anterior->ocurrencia_anterior->ocurrencia_siguiente = nuevoAd->anterior->ocurrencia_siguiente;
+                                            nuevoAd->anterior->ocurrencia_anterior = NULL;
+                                        }
+                                    }
+                                    if(nuevoAd->anterior->ocurrencia_siguiente != NULL){
+                                        if(nuevoAd->anterior->ocurrencia_siguiente->siguiente->n != nuevoAd->n){
+                                            nuevoAd->anterior->ocurrencia_siguiente->ocurrencia_anterior = nuevoAd->anterior->ocurrencia_anterior;  
+                                            nuevoAd->anterior->ocurrencia_siguiente = NULL;
+                                        }
+                                    }
                                     it->second.ultima_ocurrencia->ocurrencia_siguiente = nuevoAd->anterior;
                                     nuevoAd->anterior->ocurrencia_anterior = it->second.ultima_ocurrencia;
                                     it->second.ultima_ocurrencia = nuevoAd->anterior; 
                                     mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                                }else{
+                                    pair<int,int> borrar;
+                                    if(nuevoAd->anterior->ocurrencia_anterior != NULL){
+                                        nuevoAd->anterior->ocurrencia_anterior->ocurrencia_siguiente = NULL;
+                                        if(nuevoAd->anterior->ocurrencia_siguiente!= NULL){
+                                            nuevoAd->anterior->ocurrencia_anterior->ocurrencia_siguiente = nuevoAd->anterior->ocurrencia_siguiente;
+                                        }
+                                    }
+                                    if(nuevoAd->anterior->ocurrencia_anterior != NULL){
+                                        borrar.first = nuevoAd->anterior->n;
+                                        borrar.second = nuevoAd->anterior->ocurrencia_anterior->siguiente->n;
+                                        it = mapaAvanzado.find(borrar);
+                                        mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                                    }else{
+                                        if(nuevoAd->anterior->ocurrencia_siguiente!= NULL){
+                                            borrar.first = nuevoAd->anterior->n;
+                                            borrar.second = nuevoAd->anterior->ocurrencia_siguiente->siguiente->n;
+                                            it = mapaAvanzado.find(borrar);
+                                            mh.modificaClave(it->second.nodoDelHeap->posicion, true);
+                                        }
+                                    }
                                 }
                             }
                         }   
@@ -322,8 +369,8 @@ void CompresorRepair::versionAvanzada(){
                         }
                     }
 
-                    mh.imprime();
-                    Ad->imprime();
+                    //mh.imprime();
+                    //Ad->imprime();
                     //if((j==2)&& (auxAd!=NULL)) cout<<"el par siguiente de (1,1) :"<<auxAd->ocurrencia_siguiente->n<<endl;
                     //if((j==2)&& (auxAd!=NULL)) cout<<"el par siguiente de (1,1) :"<<auxAd->ocurrencia_siguiente->n<<endl;
                 }

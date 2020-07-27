@@ -9,7 +9,7 @@ MaxHeap::MaxHeap(){
 
 MaxHeap::~MaxHeap(){
 	for(int i = 0; i<vec_nh.size(); ++i)
-		delete vec_nh.at(i);
+		delete vec_nh[i];
 }
 
 void MaxHeap::imprime(){
