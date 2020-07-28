@@ -24,7 +24,6 @@ class DoubleListAdvanced{
         void insertFirst(int i);
         void insertLast(int i);
         void imprime();
-        void imprimeResumido();
         int size();
         bool isEmpty();
 };

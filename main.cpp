@@ -2,148 +2,54 @@
 #include <vector>
 #include <string>
 #include "CompresorRepair.h"
-//#define sigma = 40;
 using namespace std;
-
-void ciclo(int max, int i){
+double ciclo(int max){
    srand(time(NULL));
-   DoubleListAdvanced * Ad = new DoubleListAdvanced();
-   DoubleListAdvanced * aucs = new DoubleListAdvanced();
+   DoubleLinkedList * d = new DoubleLinkedList();
 	for(int i = 0; i<max ; ++i){
-	   int r = (rand()%2)+1;
-	   Ad->insertLast(r);
-	   aucs->insertLast(r);
+	   d->insertLast((rand()%80)+1);
 	}
-   CompresorRepair * c = new CompresorRepair(Ad);
-	Ad->imprimeResumido();
-  	c->versionAvanzada();
-  	aucs->imprimeResumido();
-   Ad->imprimeResumido();
-   cout<<" ----- separador ----- ("<<i<<")"<<endl;
+   CompresorRepair * c = new CompresorRepair(d);
+   clock_t start = clock();
+   c->versionDirecta();
+	clock_t end = clock();
+  	return end - start;
 }
 
 int main(){
-
-   int random;
-	cout<<"Random?"<<endl<<"Si (1)"<<endl<<"No (2)"<<endl;
-	cin>>random;
-	int max, op;
-	cout<<"inserte la cantidad de numeros a insertar"<<endl;
-   cin>>max;
-    cout<<"Version Avanzada (1)"<<endl<<"Version Directa (2)"<<endl;
-    cin>>op;
-    cout<<endl;
-    CompresorRepair * c;
-    DoubleLinkedList * d = new DoubleLinkedList();
-    DoubleListAdvanced * Ad = new DoubleListAdvanced();
-    if(op == 1)
-    	c = new CompresorRepair(Ad);
-    
-    if(op == 2)
-    	c = new CompresorRepair(d);
-    
-	if(random == 1){
-		srand(time(NULL));
-		if(op == 1){
-			DoubleListAdvanced * aucs = new DoubleListAdvanced();
-			for(int i = 0; i<max ; ++i){
-				int r = (rand()%5)+1;
-				Ad->insertLast(r);
-				aucs->insertLast(r);
-			}
-			Ad->imprimeResumido();
-  			c->versionAvanzada();
-  			aucs->imprimeResumido();
-  			Ad->imprimeResumido();
-		}
-		if(op == 2){
-			for(int i = 0; i<max ; ++i){
-				d->insertLast((rand()%26)+1);
-			}
-			d->imprime();
-  			c->versionDirecta();
-		}
-	}
-	if(random == 2){
-    	int auxi;
-    	if(op == 1){
-    		for(int i = 0; i< max ; ++i){
-   				cin>>auxi;
-   				Ad->insertLast(auxi);
-  			}
-  			Ad->imprime();
-  			c->versionAvanzada();
-    	}
-    	if(op == 2){
-   			for(int i = 0; i< max ; ++i){
-   				cin>>auxi;
-   				d->insertLast(auxi);
-  			}
-  			d->imprime();
-  			c->versionDirecta();
-		}
-	}
-
-/* 
-	int max, op, pruebas;
-   op=0;
-	cout<<"inserte la cantidad de numeros a insertar"<<endl;
-   cin>>max;
-   cout<<"ingrese cantidad de pruebas"<<endl;
-   cin>>pruebas;
-   int i = 0;
-   while(op < pruebas){
-      ciclo(max,i);
-      ++op;
-      ++i;
+   int mil = 1000;
+   int rep = 15;
+  	double time;
+   double t;
+   for(int k = 0; k < 20; k++){
+      time = 0;
+      cout<<mil<<" --> ";
+	   for(int i = 0; i < rep; i++){
+         t = ciclo(mil);
+		   time += (double)t / CLOCKS_PER_SEC;
+      }
+	   printf("%.8f\n",time/(double)rep);
+      mil = 1000 + mil;
    }
-   */
-   
    /*
-   DoubleListAdvanced * Ad = new DoubleListAdvanced();
-   Ad->insertLast(1);
-   Ad->insertLast(3);
-   Ad->insertLast(4);
-   Ad->insertLast(1);
-   Ad->insertLast(5);
-   Ad->insertLast(2);
-   Ad->insertLast(1);
-   Ad->insertLast(4);
-   Ad->insertLast(1);
-   Ad->insertLast(2);
-   Ad->insertLast(4);
-   Ad->insertLast(5);
-   Ad->insertLast(3);
-   Ad->insertLast(4);
-   Ad->insertLast(1);
-   Ad->insertLast(3);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(3);
-   Ad->insertLast(4);
-   Ad->insertLast(3);
-   Ad->insertLast(4);
-   Ad->insertLast(4);
-   Ad->insertLast(4);
-   Ad->insertLast(1);
-   Ad->insertLast(4);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(2);
-   Ad->insertLast(1);
-   Ad->insertLast(1);
-   Ad->insertLast(2);
-   Ad->insertLast(3);
-   Ad->insertLast(2);
-   Ad->insertLast(2);
-   Ad->insertLast(5);
-   Ad->insertLast(3);
-   Ad->insertLast(2);
-   Ad->insertLast(5);
-   Ad->insertLast(5);
-   CompresorRepair *c = new CompresorRepair(Ad);
-   Ad->imprime();
-   c->versionAvanzada();
+   DoubleLinkedList * d = new DoubleLinkedList();
+   	CompresorRepair *c = new CompresorRepair(d);
+   	cout<<"inserte la cantidad de elementos random"<<endl;
+   	int cantidad;
+   	cin>>cantidad;
+	for(int i = 0; i<cantidad ; ++i){
+		d->insertLast((rand()%27)+1);
+	}
+
+  	double time = 0;
+	int rep = 100;
+	for(int i = 0; i < rep; i++){
+		clock_t start = clock();
+		c->versionDirecta();
+		clock_t end = clock();
+		time += (double)(end - start) / CLOCKS_PER_SEC;
+	}
+	printf("Tiempo: %.8f\n\n",time/(double)rep);
    */
    return 0;
 }
